@@ -13,6 +13,9 @@ import json
 import argparse
 import config
 import readline
+import base64
+
+
 
 debug=True
 
@@ -115,6 +118,23 @@ def doPhrase(cmd):
   sendCargs(parms,{'cmd' : cmd[0], 'args' : args })
   return 0
 
+def doAddImage(cmd):
+  parse=argparse.ArgumentParser(prog=cmd[0],parents=[defParse]) 
+  parse.add_argument('image',nargs='1',default=[])
+  parse.add_argument('-i','--id',type=int,nargs=1,default=[currentId],help='set image id (-1) means display immediately')
+  parms=parse.parse_args(cmd[1:])
+  phrase = ""
+  image = parms.image[0];
+  args = {}
+  args['name'] = os.path.basename(image)
+  args['id'] = parms.id[0]
+  args['imgData'] = ""
+  with open(image, "rb") as image_file:
+    args['imgData'] = base64.b64encode(image_file.read())
+  sendCargs(parms,{'cmd' : cmd[0], 'args' : args })
+  return 0
+
+
 def doQuit(args):
   print "bye"
   readline.write_history_file()
@@ -129,13 +149,12 @@ def printCmds(cmd):
 
 cmds = {
       'Probe'     : doCmd
-      ,'Volume'   : doNum
       ,'Phrase'   : doPhrase
       ,'Poweroff' : doCmd
       ,'Reboot'   : doCmd
       ,'Upgrade'  : doCmd
-      ,'addImage' : doAddImage
-      ,'setDispDir' : doCmd
+      ,'AddImage' : doAddImage
+      ,'ShowImages' : doCmd
       ,'Quit' : doQuit
       ,'Help' : printCmds
     }
@@ -161,7 +180,7 @@ if __name__ == '__main__':
   else:
     readline.parse_and_bind("bind ^I rl_complete")
   readline.set_completer(completer)
-  parser = argparse.ArgumentParser()parser.add_argument('-s', '--slp', action='store_true', help='use slp instead of config') 
+  parser = argparse.ArgumentParser()
   parser.add_argument('-d','--debug', action = 'store_true',help='set debug')
   parser.add_argument('-c','--config',nargs=1,type=str,default=[config.defaultSpecPath],help='specify different config file')
   args = parser.parse_args()
