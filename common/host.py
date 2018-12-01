@@ -5,14 +5,13 @@ import argparse
 import platform
 import subprocess
 home = os.environ['HOME']
-sys.path.append(home+"/GitProjects/netGarden/config")
+sys.path.append(home+"/GitProjects/iAltar/config")
 import sys
 import json
 import urllib2
 import config
 import syslog
 
-useSlp = False
 hosts = []
 names = []
 specs = {}
@@ -105,22 +104,7 @@ def jsonStatus(s):
   d['status'] = s
   return json.dumps(d) 
      
-def sendToWordServer(ip,cmd): 
-  if debug: print "send to word server"
-  rval = True
-  port = config.specs['wordServerPort']
-  try:
-    url = "http://"+ip + ":" + str(port) + "/"+cmd
-    if debug: print "send to word server:",url
-    req = urllib2.Request(url)
-    f = urllib2.urlopen(req,None,timeout)
-    rval = f.read()
-    if debug: print("got response:"+rval)  
-  except Exception as e:
-    if debug: print "host send error:",str(e)
-    rval = jsonStatus("408")
-  return rval
-      
+
 def isLocalHost(ip):
   plats=platform.platform().split('-');
   if plats[0] == 'Darwin':
@@ -166,7 +150,7 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser()
   parser.add_argument('-d','--debug', action = 'store_true',help='set debug')
   args = parser.parse_args()
-  getHostList()
+  setHostList()
   printHostList()
   for h in hosts:
     if isLocalHost(h['ip']):

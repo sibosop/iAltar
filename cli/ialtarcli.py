@@ -14,6 +14,7 @@ import argparse
 import config
 import readline
 import base64
+import random
 
 
 
@@ -23,7 +24,7 @@ isRaspberry=platform.uname()[1] == 'raspberrypi'
 
 defParse=None
 
-
+currentId = None
 
 def sendCargs(p,cargs):
   if len(p.name) + len(p.ip) + len(p.sub) == 0:
@@ -119,18 +120,25 @@ def doPhrase(cmd):
   return 0
 
 def doAddImage(cmd):
+  global currentId
+  if currentId is None:
+    currentId = random.randint(1,50000)
   parse=argparse.ArgumentParser(prog=cmd[0],parents=[defParse]) 
-  parse.add_argument('image',nargs='1',default=[])
-  parse.add_argument('-i','--id',type=int,nargs=1,default=[currentId],help='set image id (-1) means display immediately')
+  parse.add_argument('image',nargs='*',default=[])
+  parse.add_argument('-d','--dir',type=int,nargs=1,default=[currentId],help='set image dir id (-1) means display immediately')
   parms=parse.parse_args(cmd[1:])
   phrase = ""
-  image = parms.image[0];
+  
+   
   args = {}
-  args['name'] = os.path.basename(image)
-  args['id'] = parms.id[0]
-  args['imgData'] = ""
-  with open(image, "rb") as image_file:
-    args['imgData'] = base64.b64encode(image_file.read())
+  args['id'] = parms.dir[0]
+  args['imgData'] = []
+  for image in parms.image:
+    with open(image, "rb") as image_file:
+      d={}
+      d['name'] =  os.path.basename(image)
+      d['img'] = base64.b64encode(image_file.read())
+      args['imgData'].append(d)
   sendCargs(parms,{'cmd' : cmd[0], 'args' : args })
   return 0
 
@@ -154,7 +162,7 @@ cmds = {
       ,'Reboot'   : doCmd
       ,'Upgrade'  : doCmd
       ,'AddImage' : doAddImage
-      ,'ShowImages' : doCmd
+      ,'Show' : doCmd
       ,'Quit' : doQuit
       ,'Help' : printCmds
     }
@@ -169,6 +177,7 @@ def completer(text, state):
 
 
 if __name__ == '__main__':
+  random.seed()
   host.debug = True
   run=True
   try:
@@ -196,7 +205,7 @@ if __name__ == '__main__':
   
   while run:
     try:
-      inp=raw_input("schlub-> ").split()
+      inp=raw_input("iAltar-> ").split()
       cmdargs = cmdParser.parse_args([inp[0]])
       defParse=argparse.ArgumentParser(add_help=False) 
       defParse.add_argument('-i','--ip',nargs='+',default=[],help='specify dest ip')
