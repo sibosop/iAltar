@@ -100,10 +100,12 @@ class iAltarServerThread(threading.Thread):
   def __init__(self,port):
     super(displayServerThread,self).__init__()
     self.port = port
+    host = subprocess.check_output(["hostname","-I"]).split();
+    self.host = host[0]
     syslog.syslog("display server:"+str(self.port))
     #self.server_class = BaseHTTPServer.HTTPServer
     self.server_class = iAltarServer
-    self.httpd = self.server_class(('', self.port), MyHandler)
+    self.server = ThreadedHTTPServer((self.host, self.port), MyHandler)
 
   def run(self):
     self.httpd.serve_forever()
