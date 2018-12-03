@@ -5,13 +5,14 @@ proj = os.environ['HOME'] + "//GitProjects/iAltar"
 sys.path.append(proj+"/config")
 sys.path.append(proj+"/common")
 sys.path.append(proj+"/server")
-import iAltarServer
+import server
 import syslog
 import argparse
 import config
 import datetime
 import time
 import host
+import CmdHandler
 
 debug = True
 if __name__ == '__main__':
@@ -27,7 +28,8 @@ if __name__ == '__main__':
     if debug: syslog.syslog("config path"+args.config[0])
     config.load(args.config[0])
     host.setHostPort(config.specs['iAltarServerPort'])
-    sst = iAltarServer.iAltarServerThread(config.specs['iAltarServerPort'])
+    server.cmdHandler = CmdHandler.handleCmd
+    sst = server.serverThread(config.specs['iAltarServerPort'])
     sst.setDaemon(True)
     sst.start()
     while True:

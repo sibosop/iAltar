@@ -12,13 +12,14 @@ proj = home+"GitProjects/iAltar"
 sys.path.append(proj+"/iAltar")
 sys.path.append(proj+"/config")
 sys.path.append(proj+"/common")
-sys.path.append(proj+"/server")
 import json
 import subprocess
 import urlparse
-import CmdHandler
+import server
 
 debug=True
+cmdHandler=None
+
 
 class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
     """ This class allows to handle requests in separated threads.
@@ -47,7 +48,7 @@ class MyHandler(BaseHTTPRequestHandler):
     post_body = self.rfile.read(content_len)
     
     if debug: syslog.syslog("Post:"+str(post_body))
-    status = CmdHandler.handleCmd(json.loads(post_body))
+    status = cmdHandler(json.loads(post_body))
 
     self.send_response(200)
     self.end_headers()
@@ -63,9 +64,9 @@ class MyHandler(BaseHTTPRequestHandler):
     return
 
 
-class iAltarServerThread(threading.Thread):
+class serverThread(threading.Thread):
   def __init__(self,port):
-    super(iAltarServerThread,self).__init__()
+    super(serverThread,self).__init__()
     host = subprocess.check_output(["hostname","-I"]).split();
     self.host = host[0]
     self.port = port
