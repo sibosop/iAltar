@@ -8,12 +8,12 @@ import sys
 proj = os.environ['HOME'] + "//GitProjects/iAltar"
 sys.path.append(proj+"/config")
 sys.path.append(proj+"/common")
-import asoundConfig
-import upgrade
-import soundFile
-import master
+#import asoundConfig
+#import upgrade
+#import soundFile
+#import master
 import json
-import displayText
+#import displayText
 
 debug=True
 
