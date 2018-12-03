@@ -14,8 +14,15 @@ sys.path.append(proj+"/common")
 #import master
 import json
 #import displayText
+import subprocess
+from BaseHTTPServer import HTTPServer, BaseHTTPRequestHandler
+from SocketServer import ThreadingMixIn
 
 debug=True
+
+class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
+    """ This class allows to handle requests in separated threads.
+                No further content needed, don't touch this. """
 
 def jsonStatus(s):
   d = {}
@@ -98,7 +105,7 @@ class iAltarServer(BaseHTTPServer.HTTPServer):
 
 class iAltarServerThread(threading.Thread):
   def __init__(self,port):
-    super(displayServerThread,self).__init__()
+    super(iAltarServerThread,self).__init__()
     self.port = port
     host = subprocess.check_output(["hostname","-I"]).split();
     self.host = host[0]
@@ -108,4 +115,4 @@ class iAltarServerThread(threading.Thread):
     self.server = ThreadedHTTPServer((self.host, self.port), MyHandler)
 
   def run(self):
-    self.httpd.serve_forever()
+    self.server.serve_forever()

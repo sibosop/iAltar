@@ -10,8 +10,9 @@ import syslog
 import argparse
 import config
 import datetime
+import time
 
-
+debug = True
 if __name__ == '__main__':
   try:
     pname = sys.argv[0]
@@ -24,11 +25,24 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if debug: syslog.syslog("config path"+args.config[0])
     config.load(args.config[0])
-    sst = soundServer.soundServerThread(8080)
+    sst = iAltarServer.iAltarServerThread(config.specs['iAltarServerPort'])
     sst.setDaemon(True)
     sst.start()
+    while True:
+      try:
+        time.sleep(2)
+      except KeyboardInterrupt:
+        syslog.syslog(pname+": keyboard interrupt")
+        it.close()
+        break
+      except Exception as e:
+        syslog.syslog(pname+":"+str(e))
+        it.close()
+        break
   except Exception, e:
     syslog.syslog("config error:"+str(e))
     exit(5)
+  exit(0)
+  syslog.syslog(pname+" exiting")
 
   
