@@ -16,6 +16,7 @@ sys.path.append(proj+"/server")
 import json
 import subprocess
 import urlparse
+import CmdHandler
 
 debug=True
 
@@ -46,7 +47,7 @@ class MyHandler(BaseHTTPRequestHandler):
     post_body = self.rfile.read(content_len)
     
     if debug: syslog.syslog("Post:"+str(post_body))
-    status = self.server.handleCmd(json.loads(post_body))
+    status = CmdHandler.handleCmd(json.loads(post_body))
 
     self.send_response(200)
     self.end_headers()
@@ -61,24 +62,6 @@ class MyHandler(BaseHTTPRequestHandler):
       os._exit(5)
     return
 
-class iAltarServer(HTTPServer):
-  def __init__(self,client,handler):
-    BaseHTTPServer.HTTPServer.__init__(self,client,handler)
-    self.test = "test var"
-    self.cmds = {
-      'Probe' : self.doProbe
-    }
-    syslog.syslog("init iAltarServer");
-  
-  def doProbe(self,cmd):
-    state = {}
-    state['status'] = "ok"
-    return json.dumps(state)
-
-
-  def handleCmd(self,cmd):
-    if debug: syslog.syslog("handling cmd:"+cmd['cmd']);
-    return self.cmds[cmd['cmd']](cmd)
 
 class iAltarServerThread(threading.Thread):
   def __init__(self,port):
