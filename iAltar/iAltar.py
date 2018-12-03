@@ -11,6 +11,7 @@ import argparse
 import config
 import datetime
 import time
+import host
 
 debug = True
 if __name__ == '__main__':
@@ -25,6 +26,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if debug: syslog.syslog("config path"+args.config[0])
     config.load(args.config[0])
+    host.setHostPort(config.specs['iAltarServerPort'])
     sst = iAltarServer.iAltarServerThread(config.specs['iAltarServerPort'])
     sst.setDaemon(True)
     sst.start()

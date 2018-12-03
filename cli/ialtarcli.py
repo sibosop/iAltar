@@ -195,6 +195,7 @@ if __name__ == '__main__':
   args = parser.parse_args()
   print "config path",args.config
   config.load(args.config[0])
+  host.setHostPort(config.specs['iAltarServerPort'])
   host.setHostList()
   host.printHostList()
   printCmds("")
