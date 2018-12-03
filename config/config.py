@@ -10,12 +10,14 @@ from threading import Lock
 mutex = Lock()
 specs = None
 
+debug=True
+
 def load(specPath=defaultSpecPath):
   global specs
-  syslog.syslog("config: specPath%s"%specPath)
+  if debug: syslog.syslog("config: specPath%s"%specPath)
   with open(specPath) as f:
     specs = json.load(f)
-  print specs
+  if debug: syslog.syslog("%s"%(specs))
   
   
 def internetOn():
