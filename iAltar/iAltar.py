@@ -4,6 +4,7 @@ import sys
 proj = os.environ['HOME'] + "//GitProjects/iAltar"
 sys.path.append(proj+"/config")
 sys.path.append(proj+"/common")
+sys.path.append(proj+"/server")
 import iAltarServer
 import syslog
 import argparse
