@@ -17,6 +17,8 @@ names = []
 specs = {}
 timeout = 2
 debug=True
+port=0
+
 def setHostList():
   global hosts
   if debug: syslog.syslog( "getting host from specs" )
@@ -28,6 +30,11 @@ def setHostList():
       if 'name' in a:
         names.append(a['name'])
   return hosts
+
+def setHostPort(port_):
+  global port
+  port = port_
+
 
 def getHosts():
   global hosts
@@ -70,7 +77,7 @@ def sendToHost(ip,cmd):
   rval = True
   try:
     if debug: print "send to host:",ip,cmd
-    url = "http://"+ip+":8080"
+    url = "http://%s:%d"%(ip,port)
     if debug: print("url:"+url)
     if debug: print("cmd json:"+json.dumps(cmd))
     req = urllib2.Request(url

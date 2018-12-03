@@ -1,12 +1,12 @@
 {
   "masterVolume" : 40,
   "soundMaxVol" : 0.5,
-  "subnet" : "192.168.1",
+  "subnet" : "192.168.20",
   "hosts" : [
     {
       "isMaster": false,
       "name": "pi100",
-      "ip": "192.168.1.129",
+      "ip": "192.168.20.112",
       "phraseDisplay": false,
       "imageDisplay": true
     }
