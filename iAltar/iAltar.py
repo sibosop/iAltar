@@ -13,10 +13,15 @@ import datetime
 import time
 import host
 import CmdHandler
+import DisplayHandler
+import displayImage
+import random
+import Master
 
 debug = True
 if __name__ == '__main__':
   try:
+    random.seed()
     pname = sys.argv[0]
     syslog.syslog(pname+" at "+datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
     os.environ['DISPLAY']=":0.0"
@@ -32,6 +37,16 @@ if __name__ == '__main__':
     sst = server.serverThread(config.specs['iAltarServerPort'])
     sst.setDaemon(True)
     sst.start()
+    if host.getLocalAttr('imageDisplay'):
+      displayImage.setup()
+      displayThread = DisplayHandler.displayThread()
+      displayThread.setDaemon(True)
+      displayThread.start()
+    if host.getLocalAttr('isMaster'):
+      masterThread = Master.masterThread()
+      masterThread.setDaemon(True)
+      masterThread.start()
+
     while True:
       try:
         time.sleep(2)

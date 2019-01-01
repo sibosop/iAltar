@@ -9,18 +9,25 @@ sys.path.append(proj+"/common")
 sys.path.append(proj+"/server")
 import json
 import syslog
+import DisplayHandler
 debug=True
 
+
   
-def doProbe(cmd):
+def doProbe(args):
   state = {}
   state['status'] = "ok"
+  state['displayId'] = DisplayHandler.currentId
   return json.dumps(state)
 
-def handleCmd(cmd):
-  if debug: syslog.syslog("handling cmd:"+cmd['cmd']);
-  return cmds[cmd['cmd']](cmd)
-
 cmds = {
-    'Probe' : doProbe
+    'AddImage' : DisplayHandler.addImage
+    ,'Probe' : doProbe
+    ,'RmCacheDir' : DisplayHandler.rmCacheDir
+    ,'SetImageDir' : DisplayHandler.setImageDir
+    ,'ClearCache' : DisplayHandler.clearCache
 }
+def handleCmd(cmd):
+  if debug: syslog.syslog("handling cmd:"+str(cmd));
+  return cmds[cmd['cmd']](cmd['args'])
+
