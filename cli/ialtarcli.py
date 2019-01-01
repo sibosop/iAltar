@@ -138,6 +138,7 @@ def doAddImage(cmd):
       d={}
       d['name'] =  os.path.basename(image)
       d['img'] = base64.b64encode(image_file.read())
+      #d['img'] = "imagedata"
       args['imgData'].append(d)
   sendCargs(parms,{'cmd' : cmd[0], 'args' : args })
   return 0
@@ -155,13 +156,35 @@ def printCmds(cmd):
     print c
   print
 
+def doNewCache(cmd):
+  global currentId
+  currentId = random.randint(1,50000)
+  return 0
+  
+
+def doImageDir(cmd):
+  if currentId is None:
+    print("no current Id")
+    return
+  parse=argparse.ArgumentParser(prog=cmd[0],parents=[defParse]) 
+  parms=parse.parse_args(cmd[1:])
+  sendCargs(parms,{'cmd' : cmd[0], 'args' :  [currentId]})
+  return 0
+  
+  
+  
+
 cmds = {
-      'Probe'     : doCmd
+      'AddImage' : doAddImage
+      ,'RmCacheDir' : doNum
+      ,'ClearCache' : doCmd
+      ,'SetImageDir' : doImageDir
+      ,'NewCache' : doNewCache
+      ,'Probe'     : doCmd
       ,'Phrase'   : doPhrase
       ,'Poweroff' : doCmd
       ,'Reboot'   : doCmd
       ,'Upgrade'  : doCmd
-      ,'AddImage' : doAddImage
       ,'Show' : doCmd
       ,'Quit' : doQuit
       ,'Help' : printCmds
