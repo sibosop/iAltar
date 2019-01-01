@@ -52,12 +52,13 @@ if __name__ == '__main__':
         time.sleep(2)
       except KeyboardInterrupt:
         syslog.syslog(pname+": keyboard interrupt")
+        exit(5)
         break
       except Exception as e:
         syslog.syslog(pname+":"+str(e))
         break
   except Exception, e:
-    syslog.syslog("config error:"+str(e))
+    syslog.syslog("pname Main error:"+str(e))
     exit(5)
   exit(0)
   syslog.syslog(pname+" exiting")
