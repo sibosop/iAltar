@@ -16,7 +16,7 @@ hosts = []
 names = []
 specs = {}
 timeout = 2
-debug=True
+debug=False
 port=0
 
 def setHostList():
@@ -86,7 +86,9 @@ def sendToHost(ip,cmd):
     test = f.read()
     if debug: print("got response:"+test)
   except Exception as e:
-    if debug: print "host send error:",str(e)
+    error = "host [%s] send error:%s"%(ip,str(e))
+    syslog.syslog(error)
+    if debug: print error
     rval = False
   return rval
 
