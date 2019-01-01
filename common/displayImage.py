@@ -1,11 +1,17 @@
 #!/usr/bin/env python
 import os
-home = os.environ['HOME']
-import pygame
 import sys
+home = os.environ['HOME']
+proj = home+"GitProjects/iAltar"
+sys.path.append(proj+"/iAltar")
+sys.path.append(proj+"/config")
+sys.path.append(proj+"/common")
+sys.path.append(proj+"/server")
+import pygame
 import syslog
 import time
 import host
+import config
 
 debug = True
 
@@ -34,7 +40,8 @@ def displayImage(img):
     image = pygame.image.load(img);
   except:
     syslog.syslog("display Image can't render "+img)
-    return;
+    splash = "%s/%s"%(home,config.specs['splashImg'])
+    image = pygame.image.load(splash)
   ws=screen.get_width()
   hs=screen.get_height()
   rs = float(ws)/float(hs)
