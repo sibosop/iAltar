@@ -2,13 +2,21 @@
   "masterVolume" : 40,
   "soundMaxVol" : 0.5,
   "subnet" : "192.168.20",
+  "tmpdir" : "GitProjects/iAltar/tmp",
+  "displayTimeRange" : [3,8],
+  "defaultSearchType" : "Archive",
+  "archiveDir" : "/media/pi/ARCHIVE/ArchiveImages/",
+  "archiveTextName" : "newText.lkp",
+  "masterSleepInterval" : 30,
   "hosts" : [
     {
-      "isMaster": false,
+      "isMaster": true,
       "name": "pi100",
       "ip": "192.168.20.112",
       "phraseDisplay": false,
-      "imageDisplay": true
+      "imageDisplay": true,
+      "isRaspberry" : true,
+      "hasPanel" : false
     }
   ],
 
