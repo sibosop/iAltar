@@ -113,6 +113,10 @@ class displayThread(threading.Thread):
     (minTime,maxTime) = config.specs["displayTimeRange"]
     lastImageDir=""
     imageIndex=0
+    splash = "%s/%s"%(home,config.specs['splashImg'])
+    syslog.syslog("displaying f:%s"%splash)
+    displayImage.displayImage(splash)
+    
     while True:
       path = getImageDir()
       if path is None:

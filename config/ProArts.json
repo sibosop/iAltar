@@ -8,6 +8,7 @@
   "archiveDir" : "/media/pi/ARCHIVE/ArchiveImages/",
   "archiveTextName" : "newText.lkp",
   "masterSleepInterval" : 30,
+  "splashImg" : "GitProjects/iAltar/imgs/splash.jpg",
   "hosts" : [
     {
       "isMaster": true,
@@ -17,17 +18,7 @@
       "imageDisplay": true,
       "isRaspberry" : true,
       "hasPanel" : false
-    },
-    {
-      "isMaster": false,
-      "name": "pi109",
-      "ip": "192.168.20.109",
-      "phraseDisplay": false,
-      "imageDisplay": true,
-      "isRaspberry" : true,
-      "hasPanel" : false
     }
-    
   ],
 
   "iAltarServerPort": 8085
