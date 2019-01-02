@@ -134,7 +134,10 @@ class displayThread(threading.Thread):
       afiles=glob.glob(path+"/*.jpg")
       numFiles = len(afiles)
       if numFiles == 0:
-        syslog.syslog("%s directory removed"%self.name)
+        syslog.syslog("%s directory empty!!"%self.name)
+        syslog.syslog("displaying f:%s"%splash)
+        displayImage.displayImage(splash)
+        time.sleep(10)
         continue
       syslog.syslog("imageIndex %d len afiles %d"%(imageIndex,numFiles))
       if imageIndex >= numFiles:
