@@ -14,28 +14,22 @@
       "isMaster": true,
       "name": "pi112",
       "ip": "192.168.20.112",
-      "phraseDisplay": false,
-      "imageDisplay": true,
-      "isRaspberry" : true,
-      "hasPanel" : false
+      "displayType": "Image",
+      "isRaspberry" : true
     },
     {
       "isMaster": false,
       "name": "pi109",
       "ip": "192.168.20.109",
-      "phraseDisplay": false,
-      "imageDisplay": true,
-      "isRaspberry" : true,
-      "hasPanel" : false
+      "displayType": "Image",
+      "isRaspberry" : true
     },
     {
       "isMaster": false,
       "name": "pi108",
       "ip": "192.168.20.108",
-      "phraseDisplay": false,
-      "imageDisplay": true,
       "isRaspberry" : true,
-      "hasPanel" : false
+      "displayType": "Image"
     }
   ],
 

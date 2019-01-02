@@ -37,7 +37,6 @@ class masterThread(threading.Thread):
     syslog.syslog("%s in run loop"%self.name)
     hosts = host.getHosts()
     imageHosts = []
-    panelHosts = []
     phraseHosts = []
     lastCacheId = 0
     for h in hosts:
@@ -46,11 +45,11 @@ class masterThread(threading.Thread):
         DisplayHandler.clearCache(None)
       else:
         host.sendToHost(ip,{'cmd' : 'ClearCache' , 'args' : None});
-      if host.getAttr(ip,'imageDisplay'):
+      dtype = host.getAttr(ip,'displayType')
+      syslog.syslog("%s: display type: %s"%(self.name,dtype))
+      if dtype == 'Image':
         imageHosts.append(ip)
-      if host.getAttr(ip,'hasPanel'):
-        panelHosts.append(ip)
-      if host.getAttr(ip,'phraseDisplay'):
+      if dtype == 'Phrase':
         phraseHosts.append(ip)
 
     while True:
@@ -93,9 +92,6 @@ class masterThread(threading.Thread):
             DisplayHandler.addImage(args)
           else:
             host.sendToHost(ip,cmd)
-
-        for ip in panelHosts:
-          syslog.syslog("%s: sending phrase to ip:%s"%self.name)
 
         for ip in phraseHosts:
           syslog.syslog("%s: sending phrase to ip:%s"%self.name)

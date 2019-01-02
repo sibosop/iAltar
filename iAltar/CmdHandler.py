@@ -19,6 +19,7 @@ debug=True
 def doProbe(args):
   state = {}
   state['status'] = "ok"
+  state['displayType'] = host.getLocalAttr('displayType')
   state['displayId'] = DisplayHandler.currentId
   return json.dumps(state)
 

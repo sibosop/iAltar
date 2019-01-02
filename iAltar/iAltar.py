@@ -37,7 +37,7 @@ if __name__ == '__main__':
     sst = server.serverThread(config.specs['iAltarServerPort'])
     sst.setDaemon(True)
     sst.start()
-    if host.getLocalAttr('imageDisplay'):
+    if host.getLocalAttr('displayType') == 'Image':
       displayImage.setup()
       displayThread = DisplayHandler.displayThread()
       displayThread.setDaemon(True)
