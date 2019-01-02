@@ -4,14 +4,11 @@ import os
 import sys
 from subprocess import CalledProcessError, check_output
 home = os.environ['HOME']
-sys.path.append(home+"/GitProjects/artDisplay/imageLookup")
-import adGlobal
 debug=True
 
 def upgrade():
   try:
     syslog.syslog("DOING UPGRADE")
-    os.chdir(adGlobal.progDir)
     cmd = ['git','pull','--quiet','origin','master']
     output = check_output(cmd)
     if debug: syslog.syslog(output)
