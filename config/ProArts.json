@@ -27,6 +27,15 @@
       "imageDisplay": true,
       "isRaspberry" : true,
       "hasPanel" : false
+    },
+    {
+      "isMaster": false,
+      "name": "pi108",
+      "ip": "192.168.20.108",
+      "phraseDisplay": false,
+      "imageDisplay": true,
+      "isRaspberry" : true,
+      "hasPanel" : false
     }
   ],
 
