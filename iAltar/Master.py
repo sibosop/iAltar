@@ -106,7 +106,7 @@ class masterThread(threading.Thread):
         if host.isLocalHost(ip):
           DisplayHandler.setImageDir(args)
         else:
-          host.sendToHost(ip,{'cmd' : 'SetImageDir' , 'args' : None});
+          host.sendToHost(ip,{'cmd' : 'SetImageDir' , 'args' : args});
 
       if lastCacheId != 0:
         for h in hosts:
