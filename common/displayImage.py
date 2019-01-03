@@ -28,7 +28,10 @@ def setup():
       return
   pygame.init()
   pygame.mouse.set_visible(False);
-  myFont = pygame.font.Font("%s/%s/%s"%(home,config.specs['fontDir'],"/Watchword_bold_demo.otf"), 200)
+  fontSize = host.getLocalAttr('fontSize')
+  fontFile = config.specs['fontFile']
+  syslog.syslog("seting font to %s %d"%(fontFile,fontSize))
+  myFont = pygame.font.Font("%s/%s/%s"%(home,config.specs['fontDir'],fontFile), fontSize)
   if host.getLocalAttr("isRaspberry"):
     screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
   else:

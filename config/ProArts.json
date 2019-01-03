@@ -11,12 +11,14 @@
   "masterSleepInterval" : 30,
   "splashImg" : "GitProjects/iAltar/imgs/splash.jpg",
   "textlineSpacing" : 20,
+  "fontFile" : "Watchword_bold_demo.otf",
   "hosts" : [
     {
       "isMaster": true,
       "name": "pi112",
       "ip": "192.168.20.112",
       "isRaspberry" : true,
+      "fontSize" : 90,
       "displayType": "Image"
     },
     {
@@ -24,6 +26,7 @@
       "name": "pi109",
       "ip": "192.168.20.109",
       "isRaspberry" : true,
+      "fontSize" : 90,
       "displayType": "Phrase"
     },
     {
@@ -31,6 +34,7 @@
       "name": "pi108",
       "ip": "192.168.20.108",
       "isRaspberry" : true,
+      "fontSize" : 90,
       "displayType": "Image"
     },
     {
@@ -38,6 +42,7 @@
       "name": "pi1110",
       "ip": "192.168.20.110",
       "isRaspberry" : true,
+      "fontSize" : 90,
       "displayType": "Image"
     }
   ],
