@@ -16,6 +16,7 @@ import random
 import config
 import host
 import base64
+import PhraseHandler
 
 def setImgData(fname):
   with open(fname,"rb") as ImageFile:
@@ -93,26 +94,33 @@ class masterThread(threading.Thread):
           else:
             host.sendToHost(ip,cmd)
 
-        for ip in phraseHosts:
-          syslog.syslog("%s: sending phrase to ip:%s"%self.name)
 
-      for h in hosts:
-        ip = h['ip']
-        args =[cacheId]
-        if host.isLocalHost(ip):
-          DisplayHandler.setImageDir(args)
-        else:
-          host.sendToHost(ip,{'cmd' : 'SetImageDir' , 'args' : args});
-
-      if lastCacheId != 0:
-        for h in hosts:
-          ip = h['ip']
-          args =[lastCacheId]
+        for ip in imageHosts:
+          args =[cacheId]
           if host.isLocalHost(ip):
-            DisplayHandler.rmCacheDir(args)
+            DisplayHandler.setImageDir(args)
           else:
-            host.sendToHost(ip,{'cmd' : 'RmCacheDir' , 'args' : args});
-      lastCacheId = cacheId
+            host.sendToHost(ip,{'cmd' : 'SetImageDir' , 'args' : args});
+
+        if lastCacheId != 0:
+          for ip in imageHosts:
+            args =[lastCacheId]
+            if host.isLocalHost(ip):
+              DisplayHandler.rmCacheDir(args)
+            else:
+              host.sendToHost(ip,{'cmd' : 'RmCacheDir' , 'args' : args});
+          lastCacheId = cacheId
+
+      if len(phraseHosts) != 0:
+        for ip in phraseHosts:
+          args = {}
+          args['phrase'] = choices
+          syslog.syslog("%s sending %s to %s"%(self.name,choices,ip))
+          if host.isLocalHost(ip):
+            PhraseHandler.setPhrase(args)
+          else:
+            host.sendToHost(ip,{'cmd' : 'Phrase' , 'args' : args});
+    
       sleepTime = config.specs['masterSleepInterval']  
       syslog.syslog("%s: sleeping %d"%(self.name,sleepTime))
       time.sleep(sleepTime)

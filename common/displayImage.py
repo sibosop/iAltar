@@ -13,18 +13,22 @@ import time
 import host
 import config
 
+
 debug = True
 
 screen=None
 setupDone=False
+myFont=None
 
 def setup():
   global screen
   global setupDone
+  global myFont
   if setupDone:
       return
   pygame.init()
   pygame.mouse.set_visible(False);
+  myFont = pygame.font.Font("%s/%s/%s"%(home,config.specs['fontDir'],"/Watchword_bold_demo.otf"), 200)
   if host.getLocalAttr("isRaspberry"):
     screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
   else:
@@ -85,6 +89,36 @@ def displayImage(img):
   screen.blit(simage,(xoffset,yoffset)) 
   pygame.display.flip() 
 
+
+
+def printText(text):
+    global screen
+    global myFont
+    # render text
+    lineSpacing = config.specs['textlineSpacing']
+    label1 = myFont.render(text[0], 1, (255,255,0))
+    label2 = myFont.render(text[1], 1, (255,255,0))
+    maxWidth = max(label1.get_width(),label2.get_width())
+    maxHeight = label1.get_height() + label2.get_height() + lineSpacing 
+    wordRect = pygame.Surface((maxWidth,maxHeight))
+    screen.fill((0,0,0));
+    if maxWidth == label1.get_width():
+        wordRect.blit(label1, (0, 0))
+        offset = (maxWidth - label2.get_width()) / 2
+        wordRect.blit(label2, (offset, label1.get_height() + lineSpacing))
+    else:
+        offset = (maxWidth - label1.get_width()) / 2
+        wordRect.blit(label1, (offset, 0))
+        wordRect.blit(label2, (0, label1.get_height() + lineSpacing))
+
+    wx = (screen.get_width() - wordRect.get_width()) / 2
+    if wx < 0: 
+        wx = 0
+    wy = (screen.get_height() - wordRect.get_height()) / 2
+    if wy < 0:
+        wy = 0
+    screen.blit(wordRect,(wx,wy)) 
+    pygame.display.flip() 
 
 if __name__ == '__main__':
     displayImage(sys.argv[1])

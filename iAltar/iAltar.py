@@ -17,6 +17,7 @@ import DisplayHandler
 import displayImage
 import random
 import Master
+import PhraseHandler
 
 debug = True
 if __name__ == '__main__':
@@ -37,11 +38,17 @@ if __name__ == '__main__':
     sst = server.serverThread(config.specs['iAltarServerPort'])
     sst.setDaemon(True)
     sst.start()
-    if host.getLocalAttr('displayType') == 'Image':
+    dtype = host.getLocalAttr('displayType') 
+    if dtype == 'Image':
       displayImage.setup()
       displayThread = DisplayHandler.displayThread()
       displayThread.setDaemon(True)
       displayThread.start()
+    if dtype == 'Phrase':
+      displayImage.setup()
+      PhraseThread = PhraseHandler.phraseThread()
+      PhraseThread.setDaemon(True)
+      PhraseThread.start()
     if host.getLocalAttr('isMaster'):
       masterThread = Master.masterThread()
       masterThread.setDaemon(True)

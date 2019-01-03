@@ -137,7 +137,7 @@ class displayThread(threading.Thread):
         syslog.syslog("%s directory empty!!"%self.name)
         syslog.syslog("displaying f:%s"%splash)
         displayImage.displayImage(splash)
-        time.sleep(10)
+        time.sleep(1)
         continue
       syslog.syslog("imageIndex %d len afiles %d"%(imageIndex,numFiles))
       if imageIndex >= numFiles:

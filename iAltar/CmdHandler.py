@@ -10,6 +10,7 @@ sys.path.append(proj+"/server")
 import json
 import syslog
 import DisplayHandler
+import PhraseHandler
 import host
 import upgrade
 import time
@@ -44,6 +45,7 @@ cmds = {
     ,'Upgrade' : doUpgrade
     ,'Poweroff' : doPoweroff
     ,'Reboot' : doReboot
+    ,'Phrase' : PhraseHandler.setPhrase
 }
 def handleCmd(cmd):
   if debug: syslog.syslog("handling cmd:"+str(cmd));
