@@ -30,6 +30,13 @@
       "ip": "192.168.20.108",
       "isRaspberry" : true,
       "displayType": "Image"
+    },
+    {
+      "isMaster": false,
+      "name": "pi1110",
+      "ip": "192.168.20.110",
+      "isRaspberry" : true,
+      "displayType": "Image"
     }
   ],
 
