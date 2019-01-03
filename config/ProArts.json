@@ -16,15 +16,15 @@
       "isMaster": true,
       "name": "pi112",
       "ip": "192.168.20.112",
-      "displayType": "Phrase",
-      "isRaspberry" : true
+      "isRaspberry" : true,
+      "displayType": "Image"
     },
     {
       "isMaster": false,
       "name": "pi109",
       "ip": "192.168.20.109",
-      "displayType": "Image",
-      "isRaspberry" : true
+      "isRaspberry" : true,
+      "displayType": "Phrase"
     },
     {
       "isMaster": false,
