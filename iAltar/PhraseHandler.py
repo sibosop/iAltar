@@ -7,7 +7,6 @@ sys.path.append(proj+"/iAltar")
 sys.path.append(proj+"/config")
 sys.path.append(proj+"/common")
 import json
-import syslog
 import config
 import threading
 import host
@@ -21,7 +20,7 @@ name = "Phrase Handler"
 def setPhrase(args):
   global phrase
   p = args['phrase']
-  syslog.syslog("%s setting phrase to %s"%(name,p))
+  print("%s setting phrase to %s"%(name,p))
   phraseMutex.acquire()
   phrase=p
   phraseMutex.release()
@@ -39,17 +38,17 @@ class phraseThread(threading.Thread):
   def __init__(self):
     super(phraseThread,self).__init__()
     self.name = "pisplayThread"
-    syslog.syslog("starting: %s"%self.name)
+    print("starting: %s"%self.name)
 
   def run(self):
     lastPhrase = []
     splash = "%s/%s"%(home,config.specs['splashImg'])
-    syslog.syslog("%s displaying f:%s"%(name,splash))
+    print("%s displaying f:%s"%(name,splash))
     displayImage.displayImage(splash)
     while True:
       p = getPhrase()
       if p != lastPhrase:
-        syslog.syslog("%s Displaying Phrase %s"%(self.name,p))
+        print("%s Displaying Phrase %s"%(self.name,p))
         displayImage.printText(p)
         lastPhrase = p
       time.sleep(1)

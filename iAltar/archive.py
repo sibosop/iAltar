@@ -12,7 +12,6 @@ import random
 import subprocess
 import os
 import sys
-import syslog
 import time
 import config
 import DisplayHandler
@@ -31,43 +30,43 @@ def getArchive():
   adir=config.specs["archiveDir"]
   cdir=getArchiveCache()
   if init == False:
-    if debug: syslog.syslog("init seed")
+    if debug: print("init seed")
     random.seed()
     init=True
     for a in glob.glob(adir+"/*.tgz"):
-      if debug: syslog.syslog ("a: %s"%a)
+      if debug: print("a: %s"%a)
       archives.append(a)
   files = glob.glob(cdir+"/*")
   for f in files:
     os.remove(f)
   n = random.randint(0,len(archives)-1)
-  syslog.syslog("n:"+str(n)+" archive:"+archives[n])
+  print("n:"+str(n)+" archive:"+archives[n])
   try:  
     cmd=["tar","xzf",archives[n],"-C",cdir]
-    if debug: syslog.syslog( "cmd: %s"%cmd)
+    if debug: print( "cmd: %s"%cmd)
     subprocess.check_output(cmd)
   except subprocess.CalledProcessError, e:
-    syslog.syslog("archive problem: "+', '.join(cmd)+str(e.output))
+    print("archive problem: "+', '.join(cmd)+str(e.output))
   images=[]
   choices=[]
   try:
     for a in glob.glob(cdir+"/*.jpg"):
-      if debug: syslog.syslog("archive image %s"%a)
+      if debug: print("archive image %s"%a)
       images.append(a);
   except:
     e = sys.exc_info()[0]
-    syslog.syslog("return from archive image append "+str(e))
+    print("return from archive image append "+str(e))
   
   textName=cdir+"/"+config.specs['archiveTextName']
-  if debug: syslog.syslog("textName %s"%textName)
+  if debug: print("textName %s"%textName)
   try:  
     with open(textName) as fp:
       for line in fp:
-        if debug: syslog.syslog(line.rstrip())
+        if debug: print(line.rstrip())
         choices.append(line.rstrip())
   except:
     e = sys.exc_info()[0]
-    syslog.syslog("choice name append "+str(e))
+    print("choice name append "+str(e))
 
   return [images,choices]
   

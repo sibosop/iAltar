@@ -4,7 +4,6 @@ home = os.environ['HOME']
 defaultSpecPath = home+"/GitProjects/iAltar/config/ialtar.json"
 import json
 import urllib2
-import syslog
 from threading import Lock
 
 mutex = Lock()
@@ -14,10 +13,10 @@ debug=True
 
 def load(specPath=defaultSpecPath):
   global specs
-  if debug: syslog.syslog("config: specPath%s"%specPath)
+  if debug: print("config: specPath%s"%specPath)
   with open(specPath) as f:
     specs = json.load(f)
-  if debug: syslog.syslog("%s"%(specs))
+  if debug: print("%s"%(specs))
   
   
 def internetOn():

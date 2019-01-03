@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import syslog
 import os
 import sys
 from subprocess import CalledProcessError, check_output
@@ -8,12 +7,12 @@ debug=True
 
 def upgrade():
   try:
-    syslog.syslog("DOING UPGRADE")
+    print("DOING UPGRADE")
     cmd = ['git','pull','--quiet','origin','master']
     output = check_output(cmd)
-    if debug: syslog.syslog(output)
+    if debug: print(output)
   except Exception, e:
-    syslog.syslog("player error: "+repr(e))
+    print("player error: "+repr(e))
 
 if __name__ == '__main__':
   upgrade()

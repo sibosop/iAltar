@@ -10,7 +10,6 @@ import sys
 import json
 import urllib2
 import config
-import syslog
 
 hosts = []
 names = []
@@ -21,7 +20,7 @@ port=0
 
 def setHostList():
   global hosts
-  if debug: syslog.syslog( "getting host from specs" )
+  if debug: print( "getting host from specs" )
   if config.specs == None:
     config.load()
   if len(hosts) == 0:
@@ -87,7 +86,7 @@ def sendToHost(ip,cmd):
     if debug: print("got response:"+test)
   except Exception as e:
     error = "host [%s] send error:%s"%(ip,str(e))
-    syslog.syslog(error)
+    print(error)
     if debug: print error
     rval = False
   return rval
@@ -120,11 +119,11 @@ def isLocalHost(ip):
     return False
   myIp = subprocess.check_output(["hostname","-I"]).split()
   for i in myIp:
-    if debug: syslog.syslog("isLocalHost: ip:"+ip+ " myIp:"+i)
+    if debug: print("isLocalHost: ip:"+ip+ " myIp:"+i)
     if i == ip:
-      if debug: syslog.syslog("isLocalHost is True:"+ip)
+      if debug: print("isLocalHost is True:"+ip)
       return True
-  if debug: syslog.syslog("isLocalHost is False:"+ip)
+  if debug: print("isLocalHost is False:"+ip)
   return False
 
 def getLocalHost():
@@ -132,7 +131,7 @@ def getLocalHost():
   ipList = subprocess.check_output(["hostname","-I"]).split()
   for ip in ipList:
     if subnet in ip:
-      if debug: syslog.syslog("local host:"+ip)
+      if debug: print("local host:"+ip)
       return ip
   return None
   
@@ -141,17 +140,17 @@ def getHost(ip):
     for h in hosts:
       if h['ip'] == ip:
         return h
-    syslog.syslog("Can't find ip"+ip)
+    print("Can't find ip"+ip)
     return None
     
 def getAttr(ip,a):
   rval = getHost(ip)[a]
-  if debug: syslog.syslog("Get Attr "+a+":"+str(rval))
+  if debug: print("Get Attr "+a+":"+str(rval))
   return rval 
   
 def getLocalAttr(a):
   rval = getHost(getLocalHost())[a]
-  if debug: syslog.syslog("Get Local Attr "+a+":"+str(rval))
+  if debug: print("Get Local Attr "+a+":"+str(rval))
   return rval
 
 if __name__ == '__main__':
@@ -163,4 +162,4 @@ if __name__ == '__main__':
   printHostList()
   for h in hosts:
     if isLocalHost(h['ip']):
-      syslog.syslog (h['ip']+"is local host")
+      print(h['ip']+"is local host")

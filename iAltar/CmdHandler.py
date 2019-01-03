@@ -8,7 +8,6 @@ sys.path.append(proj+"/config")
 sys.path.append(proj+"/common")
 sys.path.append(proj+"/server")
 import json
-import syslog
 import DisplayHandler
 import PhraseHandler
 import host
@@ -27,7 +26,7 @@ def doProbe(args):
 
 def doUpgrade(cmd):
   upgrade.upgrade()
-  syslog.syslog("returned from upgrade")
+  print("returned from upgrade")
   return host.jsonStatus("reboot")
 
 def doPoweroff(cmd):
@@ -48,7 +47,7 @@ cmds = {
     ,'Phrase' : PhraseHandler.setPhrase
 }
 def handleCmd(cmd):
-  if debug: syslog.syslog("handling cmd:"+str(cmd));
+  if debug: print("handling cmd:"+str(cmd));
   if cmd['cmd'] not in cmds.keys():
     return host.jsonStatus("%s: not implemented"%cmd['cmd']);
   status = cmds[cmd['cmd']](cmd['args'])

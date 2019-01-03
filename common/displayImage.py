@@ -8,7 +8,6 @@ sys.path.append(proj+"/config")
 sys.path.append(proj+"/common")
 sys.path.append(proj+"/server")
 import pygame
-import syslog
 import time
 import host
 import config
@@ -30,14 +29,14 @@ def setup():
   pygame.mouse.set_visible(False);
   fontSize = host.getLocalAttr('fontSize')
   fontFile = config.specs['fontFile']
-  syslog.syslog("seting font to %s %d"%(fontFile,fontSize))
+  print("seting font to %s %d"%(fontFile,fontSize))
   myFont = pygame.font.Font("%s/%s/%s"%(home,config.specs['fontDir'],fontFile), fontSize)
   if host.getLocalAttr("isRaspberry"):
     screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
   else:
     screen = pygame.display.set_mode([800,480]);
   setupDone=True
-  syslog.syslog("display image setup done")
+  print("display image setup done")
 
 def displayImage(img):
   global screen
@@ -46,7 +45,7 @@ def displayImage(img):
   try:
     image = pygame.image.load(img);
   except:
-    syslog.syslog("display Image can't render "+img)
+    print("display Image can't render "+img)
     splash = "%s/%s"%(home,config.specs['splashImg'])
     image = pygame.image.load(splash)
   ws=screen.get_width()
@@ -58,7 +57,7 @@ def displayImage(img):
   dw = 0
   dh = 0
   if  wi < (ws/2) and hi < (hs/2):
-    syslog.syslog("doing half scale:"+img)
+    print("doing half scale:"+img)
     simage = pygame.transform.scale2x(image)
   else:
     if rs > ri:
@@ -69,15 +68,15 @@ def displayImage(img):
       dh = hi * (float(ws)/float(wi))
 
     try:
-      syslog.syslog("doing smooth scale:"+img)
+      print("doing smooth scale:"+img)
       simage = pygame.transform.smoothscale(image,(int(dw),int(dh)))
     except:
-      syslog.syslog("smoothscale failed doing normal scale for:"+img)
+      print("smoothscale failed doing normal scale for:"+img)
       simage = pygame.transform.scale(image,(int(dw),int(dh)))
 
   xoffset = (ws - simage.get_width()) / 2
   yoffset = (hs - simage.get_height()) / 2
-  if debug: syslog.syslog("displayImage ws:"+str(ws) 
+  if debug: print("displayImage ws:"+str(ws) 
           + " hs:"+str(hs) 
           + " rs:"+str(rs)
           +"  wi:"+str(wi) 

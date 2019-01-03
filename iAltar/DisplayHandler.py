@@ -8,7 +8,6 @@ sys.path.append(proj+"/config")
 sys.path.append(proj+"/common")
 sys.path.append(proj+"/server")
 import json
-import syslog
 import config
 import base64
 import host
@@ -49,7 +48,7 @@ def rmCacheDir(args):
     shutil.rmtree(path)
   except OSError as e:
     rval = "Error: %s - %s." % (e.filename, e.strerror)
-  syslog.syslog ("rmCacheDir: path %s %s"%(path,rval))
+  print("rmCacheDir: path %s %s"%(path,rval))
   return host.jsonStatus(rval)
   
 
@@ -59,11 +58,11 @@ def addImage(args):
   imgData = args['imgData']
   if currentId is None or currentId != id:
     currentId = id
-  syslog.syslog("addImage currentId: %d"%currentId)
+  print("addImage currentId: %d"%currentId)
   path = getCacheDir(currentId)
   for d in imgData:
     file = path + "/%s"%d['name']
-    syslog.syslog("---name: %s\n"%file)
+    print("---name: %s"%file)
     with open(file, 'wb') as f:
       f.write(base64.b64decode(d['img']))
 
@@ -86,7 +85,7 @@ def setImageDir(args):
   idLock.acquire()
   imageDir = path
   idLock.release()
-  syslog.syslog ("SetImageDir to %s: %s"%(imageDir,rval))
+  print("SetImageDir to %s: %s"%(imageDir,rval))
   return host.jsonStatus(rval)
 
 def clearCache(args):
@@ -94,7 +93,7 @@ def clearCache(args):
   for f in os.listdir(path):
     try:
       r = path+"/%s"%f
-      syslog.syslog("rm: %s"%r)
+      print("rm: %s"%r)
       shutil.rmtree(path)
     except OSError as e:
       rval = "Error: %s - %s." % (e.filename, e.strerror)
@@ -105,7 +104,7 @@ class displayThread(threading.Thread):
   def __init__(self):
     super(displayThread,self).__init__()
     self.name = "displayThread"
-    syslog.syslog("starting: %s"%self.name)
+    print("starting: %s"%self.name)
 
 
   def run(self):
@@ -114,7 +113,7 @@ class displayThread(threading.Thread):
     lastImageDir=""
     imageIndex=0
     splash = "%s/%s"%(home,config.specs['splashImg'])
-    syslog.syslog("displaying f:%s"%splash)
+    print("displaying f:%s"%splash)
     displayImage.displayImage(splash)
     
     while True:
@@ -122,32 +121,32 @@ class displayThread(threading.Thread):
       if path is None:
         time.sleep(1)
         continue
-      syslog.syslog("%s: path %s lastImageDir %s"%(self.name,path,lastImageDir))
+      print("%s: path %s lastImageDir %s"%(self.name,path,lastImageDir))
       if path != lastImageDir:
-        syslog.syslog("%s reseting imageIndex"%self.name)
+        print("%s reseting imageIndex"%self.name)
         imageIndex = 0
         lastImageDir = path
         if len(afiles) == 0:
-          syslog.syslog("empty image file. waiting")
+          print("empty image file. waiting")
           time.sleep(1)
           continue
       afiles=glob.glob(path+"/*.jpg")
       numFiles = len(afiles)
       if numFiles == 0:
-        syslog.syslog("%s directory empty!!"%self.name)
-        syslog.syslog("displaying f:%s"%splash)
+        print("%s directory empty!!"%self.name)
+        print("displaying f:%s"%splash)
         displayImage.displayImage(splash)
         time.sleep(1)
         continue
-      syslog.syslog("imageIndex %d len afiles %d"%(imageIndex,numFiles))
+      print("imageIndex %d len afiles %d"%(imageIndex,numFiles))
       if imageIndex >= numFiles:
-        syslog.syslog("resetting imageIndex");
+        print("resetting imageIndex");
         imageIndex = 0
       f = afiles[imageIndex]
-      syslog.syslog("displaying f:%s"%f)
+      print("displaying f:%s"%f)
       displayImage.displayImage(f)
       next = (random.random() * (maxTime - minTime)) + minTime
-      syslog.syslog("next display %f"%next)
+      print("next display %f"%next)
       time.sleep(next)
       imageIndex += 1
 

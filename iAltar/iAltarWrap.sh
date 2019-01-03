@@ -6,14 +6,15 @@ while true; do
   do
     args="$args $i "
   done
+  export PYTHONUNBUFFERED=true
   /home/pi/GitProjects/iAltar/iAltar/iAltar.py $args
   rc=$?
   case $rc in
-    3) logger doing poweroff; sudo poweroff
+    3) echo doing poweroff; sudo poweroff
     ;;
-    4) logger doing reboot; sudo reboot
+    4) echo doing reboot; sudo reboot
     ;;
-    5) logger doing stop; exit 0
+    5) echo doing stop; exit 0
     ;;
     *)
     ;;

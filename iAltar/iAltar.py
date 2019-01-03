@@ -1,12 +1,12 @@
-#!/usr/bin/env python
+#!/usr/bin/env python 
 import os
 import sys
 proj = os.environ['HOME'] + "//GitProjects/iAltar"
+unbuff = os.environ['PYTHONUNBUFFERED'] 
 sys.path.append(proj+"/config")
 sys.path.append(proj+"/common")
 sys.path.append(proj+"/server")
 import server
-import syslog
 import argparse
 import config
 import datetime
@@ -24,14 +24,15 @@ if __name__ == '__main__':
   try:
     random.seed()
     pname = sys.argv[0]
-    syslog.syslog(pname+" at "+datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
+    print(pname+" at "+datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
+    print "%s unbuffered %s"%(pname,unbuff)
     os.environ['DISPLAY']=":0.0"
     os.chdir(os.path.dirname(sys.argv[0]))
     parser = argparse.ArgumentParser() 
     parser.add_argument('-d','--debug', action = 'store_true',help='set debug')
     parser.add_argument('-c','--config',nargs=1,type=str,default=[config.defaultSpecPath],help='specify different config file')
     args = parser.parse_args()
-    if debug: syslog.syslog("config path"+args.config[0])
+    if debug: print("config path"+args.config[0])
     config.load(args.config[0])
     host.setHostPort(config.specs['iAltarServerPort'])
     server.cmdHandler = CmdHandler.handleCmd
@@ -58,16 +59,17 @@ if __name__ == '__main__':
       try:
         time.sleep(2)
       except KeyboardInterrupt:
-        syslog.syslog(pname+": keyboard interrupt")
-        exit(5)
+        print(pname+": keyboard interrupt")
+        server.doExit(5)
         break
       except Exception as e:
-        syslog.syslog(pname+":"+str(e))
+        print(pname+":"+str(e))
+        server.doExit(5)
         break
   except Exception, e:
-    syslog.syslog("pname Main error:"+str(e))
-    exit(5)
-  exit(0)
-  syslog.syslog(pname+" exiting")
+    print("pname Main error:"+str(e))
+    server.doExit(5)
+  print(pname+" exiting")
+  server.doExit(0)
 
   

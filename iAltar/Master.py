@@ -7,7 +7,6 @@ sys.path.append(proj+"/iAltar")
 sys.path.append(proj+"/config")
 sys.path.append(proj+"/common")
 sys.path.append(proj+"/server")
-import syslog
 import threading
 import time
 import archive
@@ -30,12 +29,12 @@ class masterThread(threading.Thread):
   def __init__(self):
     super(masterThread,self).__init__()
     self.name = "masterThread"
-    syslog.syslog("starting: %s"%self.name)
+    print("starting: %s"%self.name)
     self.searchType = config.specs['defaultSearchType'];
-    syslog.syslog("%s: default search type: %s"%(self.name,self.searchType))
+    print("%s: default search type: %s"%(self.name,self.searchType))
 
   def run(self):
-    syslog.syslog("%s in run loop"%self.name)
+    print("%s in run loop"%self.name)
     hosts = host.getHosts()
     imageHosts = []
     phraseHosts = []
@@ -47,7 +46,7 @@ class masterThread(threading.Thread):
       else:
         host.sendToHost(ip,{'cmd' : 'ClearCache' , 'args' : None});
       dtype = host.getAttr(ip,'displayType')
-      syslog.syslog("%s: display type: %s"%(self.name,dtype))
+      print("%s: display type: %s"%(self.name,dtype))
       if dtype == 'Image':
         imageHosts.append(ip)
       if dtype == 'Phrase':
@@ -61,11 +60,11 @@ class masterThread(threading.Thread):
         [images,choices] = archive.getArchive()
         if debug:
           for i in images:
-            syslog.syslog("%s: image %s"%(self.name,i))
+            print("%s: image %s"%(self.name,i))
           for c in choices:
-            syslog.syslog("%s: choice %s"%(self.name,c))
+            print("%s: choice %s"%(self.name,c))
       else:
-        syslog.syslog("%s unimplemented type %s"%(self.name,self.searchType))
+        print("%s unimplemented type %s"%(self.name,self.searchType))
 
       if len(imageHosts) != 0:
         numImages = len(images)
@@ -73,7 +72,7 @@ class masterThread(threading.Thread):
         extraImages = numImages % len(imageHosts)
         extra = 0
         count = 0
-        syslog.syslog(
+        print(
               "%s numImages:%d imagesPerHost:%d extraImages:%d"
               %(self.name,numImages,imagesPerHost,extraImages))
         for ip in imageHosts:
@@ -115,13 +114,13 @@ class masterThread(threading.Thread):
         for ip in phraseHosts:
           args = {}
           args['phrase'] = choices
-          syslog.syslog("%s sending %s to %s"%(self.name,choices,ip))
+          print("%s sending %s to %s"%(self.name,choices,ip))
           if host.isLocalHost(ip):
             PhraseHandler.setPhrase(args)
           else:
             host.sendToHost(ip,{'cmd' : 'Phrase' , 'args' : args});
     
       sleepTime = config.specs['masterSleepInterval']  
-      syslog.syslog("%s: sleeping %d"%(self.name,sleepTime))
+      print("%s: sleeping %d"%(self.name,sleepTime))
       time.sleep(sleepTime)
-      
+    
