@@ -16,7 +16,7 @@ import subprocess
 import urlparse
 import server
 
-debug=True
+debug=False
 cmdHandler=None
 
 def doExit(num):

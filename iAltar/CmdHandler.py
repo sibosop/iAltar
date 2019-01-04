@@ -47,7 +47,7 @@ cmds = {
     ,'Phrase' : PhraseHandler.setPhrase
 }
 def handleCmd(cmd):
-  if debug: print("handling cmd:"+str(cmd));
+  if debug: print("handling cmd:"+str(cmd['cmd']));
   if cmd['cmd'] not in cmds.keys():
     return host.jsonStatus("%s: not implemented"%cmd['cmd']);
   status = cmds[cmd['cmd']](cmd['args'])
