@@ -108,7 +108,7 @@ class masterThread(threading.Thread):
               DisplayHandler.rmCacheDir(args)
             else:
               host.sendToHost(ip,{'cmd' : 'RmCacheDir' , 'args' : args});
-          lastCacheId = cacheId
+        lastCacheId = cacheId
 
       if len(phraseHosts) != 0:
         for ip in phraseHosts:
