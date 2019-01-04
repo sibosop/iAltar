@@ -97,6 +97,9 @@ def printText(text):
     global screen
     global myFont
     # render text
+    if len(text) < 2:
+        print "display image bad text format"
+        return
     lineSpacing = config.specs['textlineSpacing']
     label1 = myFont.render(text[0], 1, (255,255,0))
     label2 = myFont.render(text[1], 1, (255,255,0))
