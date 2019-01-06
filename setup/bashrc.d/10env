@@ -1,0 +1,18 @@
+
+
+#Locale-definisjon
+# UTF-8
+#######
+export LANG=en_US.UTF-8
+export LOCALE=UTF-8
+export LESSCHARSET='utf-8'
+
+export GOOGLE_APPLICATION_CREDENTIALS=/home/pi/apiKeys/recog.json
+export EDITOR=vim
+
+export projects=$HOME/GitProjects
+export ialtar=$projects/iAltar
+export serverdir=$ialtar/iAtar
+export clidir=$ialtar/cli
+export configDir=$ialtar/config
+export commondir=$ialtar/common
