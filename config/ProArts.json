@@ -27,7 +27,7 @@
       "ip": "192.168.20.109",
       "isRaspberry" : true,
       "fontSize" : 90,
-      "displayType": "Phrase"
+      "displayType": "Image"
     },
     {
       "isMaster": false,
@@ -35,7 +35,7 @@
       "ip": "192.168.20.108",
       "isRaspberry" : true,
       "fontSize" : 90,
-      "displayType": "Image"
+      "displayType": "Phrase"
     },
     {
       "isMaster": false,
