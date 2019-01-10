@@ -9,7 +9,7 @@ from threading import Lock
 mutex = Lock()
 specs = None
 
-debug=True
+debug=False
 
 def load(specPath=defaultSpecPath):
   global specs

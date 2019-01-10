@@ -12,6 +12,7 @@
   "splashImg" : "GitProjects/iAltar/imgs/splash.jpg",
   "textlineSpacing" : 20,
   "fontFile" : "Watchword_bold_demo.otf",
+  "wordList" : ["corncob_lowercase.txt"],
   "hosts" : [
     {
       "isMaster": true,
