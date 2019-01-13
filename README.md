@@ -6,4 +6,5 @@ New implementation of artDisplay project
 
 ### make sure the syslog rotation is daily not weekly
 check the log file daily since the directory is now smaller, change weekly to daily
+keep only two days
 sudo vi /etc/logrotate.conf
