@@ -13,6 +13,7 @@
   "textlineSpacing" : 20,
   "fontFile" : "Watchword_bold_demo.otf",
   "wordList" : ["corncob_lowercase.txt"],
+  "credFile" : "/media/pi/ARCHIVE/creds.txt",
   "hosts" : [
     {
       "isMaster": true,

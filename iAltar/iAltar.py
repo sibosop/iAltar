@@ -19,6 +19,7 @@ import random
 import Master
 import PhraseHandler
 
+masterThread=None
 debug = True
 if __name__ == '__main__':
   try:
