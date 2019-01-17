@@ -16,6 +16,23 @@ import config
 import host
 import base64
 import PhraseHandler
+import google
+import words
+import json
+import requests
+import re
+import urllib2
+import datetime
+import traceback
+import ssl
+
+
+searchType=None
+
+def setSearchType(t):
+  global searchType
+  searchType = t[0]
+  return host.jsonStatus("ok")
 
 def setImgData(fname):
   with open(fname,"rb") as ImageFile:
@@ -24,16 +41,52 @@ def setImgData(fname):
     d['img'] = base64.b64encode(ImageFile.read())
   return d
 
+def urlsToImages(urls):
+  cdir = archive.clearArchive()
+  imageCount = 0
+  images = []
+  for url in urls:
+    if debug: print( "url:%s"%url)
+    imageTypes=['full','thumb']
+    raw_img=None
+    for t in imageTypes:
+      try:
+        #startTime = time.time()
+        if debug: print( "open image type:"+t+" image:",url[t] )
+        req = urllib2.Request(url[t],headers={'User-Agent' : "Magic Browser"})
+        gcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+        con = urllib2.urlopen( req, context=gcontext )
+        raw_img = con.read()
+        #raw_img = urllib2.urlopen(images[imageIndex]).read()
+        #if debug: print( "elapsed:"+str(time.time() - startTime))
+        break;
+      except:
+        print("return from exception for type %s url %s"%(t,url[t]))
+        #print("elapsed:"+str(time.time() - startTime))
+        #print(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
+        #print(traceback.format_exc())
+        continue;
+    if raw_img != None:
+      fname = "%s/urlimage%d.jpg"%(cdir,imageCount)
+      imageCount += 1
+      f = open(fname,"wb")
+      f.write(raw_img)
+      f.close()
+      images.append(fname)
+  return images
+
 debug=True
 class masterThread(threading.Thread):
   def __init__(self):
     super(masterThread,self).__init__()
     self.name = "masterThread"
     print("starting: %s"%self.name)
-    self.searchType = config.specs['defaultSearchType'];
-    print("%s: default search type: %s"%(self.name,self.searchType))
+    global searchType
+    searchType = config.specs['defaultSearchType'];
+    print("%s: default search type: %s"%(self.name,searchType))
 
   def run(self):
+    global searchType
     print("%s in run loop"%self.name)
     hosts = host.getHosts()
     imageHosts = []
@@ -54,17 +107,22 @@ class masterThread(threading.Thread):
 
     while True:
       cacheId = random.randint(10000,20000)
-      if self.searchType == 'Archive':
-        images=[]
-        choices=[]
+      images=[]
+      choices=[]
+      urls=[]
+      if searchType == 'Archive':
         [images,choices] = archive.getArchive()
         if debug:
           for i in images:
             print("%s: image %s"%(self.name,i))
           for c in choices:
             print("%s: choice %s"%(self.name,c))
+      elif searchType == 'Google':
+        choices = words.getWords()
+        images = urlsToImages(google.getUrls(choices));
       else:
-        print("%s unimplemented type %s"%(self.name,self.searchType))
+        print("%s unimplemented type %s switching to archive"%(self.name,searchType))
+        searchType = 'Archive'
 
       if len(imageHosts) != 0:
         numImages = len(images)

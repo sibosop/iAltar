@@ -13,6 +13,7 @@ import PhraseHandler
 import host
 import upgrade
 import time
+import Master
 debug=True
 
   
@@ -45,6 +46,7 @@ cmds = {
     ,'Poweroff' : doPoweroff
     ,'Reboot' : doReboot
     ,'Phrase' : PhraseHandler.setPhrase
+    ,'Search' : Master.setSearchType
 }
 def handleCmd(cmd):
   if debug: print("handling cmd:"+str(cmd['cmd']));

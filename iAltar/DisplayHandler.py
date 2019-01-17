@@ -24,6 +24,7 @@ imageDir = None;
 idLock = threading.Lock()
 
 
+
 def mkpath(path):
   try: 
     os.makedirs(path)
@@ -31,6 +32,10 @@ def mkpath(path):
     if not os.path.isdir(path):
       raise
   return path
+
+def getArchiveCache():
+  path = "%s/%s/archiveCache"%(home,config.specs['tmpdir'])
+  return mkpath(path)
 
 def getImageCache():
   path = "%s/%s/imageCache"%(home,config.specs['tmpdir'])

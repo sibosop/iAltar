@@ -21,14 +21,18 @@ debug=False
 global init
 init=False
 archives=[]
-def getArchiveCache():
-  path = "%s/%s/archiveCache"%(home,config.specs['tmpdir'])
-  return DisplayHandler.mkpath(path)
+
+def clearArchive():
+  cdir=DisplayHandler.getArchiveCache()
+  files = glob.glob(cdir+"/*")
+  for f in files:
+    os.remove(f)
+  return cdir
 
 def getArchive():
   global init
   adir=config.specs["archiveDir"]
-  cdir=getArchiveCache()
+  cdir=clearArchive()
   if init == False:
     if debug: print("init seed")
     random.seed()
@@ -36,9 +40,6 @@ def getArchive():
     for a in glob.glob(adir+"/*.tgz"):
       if debug: print("a: %s"%a)
       archives.append(a)
-  files = glob.glob(cdir+"/*")
-  for f in files:
-    os.remove(f)
   n = random.randint(0,len(archives)-1)
   print("n:"+str(n)+" archive:"+archives[n])
   try:  
