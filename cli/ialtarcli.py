@@ -170,10 +170,11 @@ def doImageDir(cmd):
   parms=parse.parse_args(cmd[1:])
   sendCargs(parms,{'cmd' : cmd[0], 'args' :  [currentId]})
   return 0
-  
-  
-  
 
+def doSearch(cmd):
+  host.sendToMaster(cmd)
+  return 0
+  
 cmds = {
       'AddImage' : doAddImage
       ,'RmCacheDir' : doNum
@@ -187,6 +188,7 @@ cmds = {
       ,'Upgrade'  : doCmd
       ,'Show' : doCmd
       ,'Quit' : doQuit
+      ,'Search' : doMasterArg
       ,'Help' : printCmds
     }
 
