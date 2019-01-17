@@ -41,7 +41,7 @@ from apiclient.discovery import build
 
 global initFlag
 initFlag=False
-debug=True
+debug=False
 global creds
 creds={}
 
@@ -59,7 +59,7 @@ def doSetup():
   
 
   
-def getImages(qs):
+def getUrls(qs):
   global initFlag
   if initFlag==False:
     doSetup()
@@ -133,7 +133,7 @@ def getImages(qs):
 
 if __name__ == '__main__':
   import words
-  images=getImages(words.getWords())
-  for i in images:
+  urls=getUrls(words.getWords())
+  for i in urls:
     print "full:",i['full']
     print "thumb:",i['thumb']
