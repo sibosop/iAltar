@@ -119,6 +119,14 @@ class masterThread(threading.Thread):
             print("%s: choice %s"%(self.name,c))
       elif searchType == 'Google':
         choices = words.getWords()
+        urls = google.getUrls(choices);
+        if urls == None:
+          print("%s Google Error switching to Archive"%self.name)
+          searchType = "Archive"
+          continue
+        if len(urls) == 0:
+          print("%s Nothing found try again"%self.name)
+          continue
         images = urlsToImages(google.getUrls(choices));
       else:
         print("%s unimplemented type %s switching to archive"%(self.name,searchType))

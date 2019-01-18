@@ -119,14 +119,12 @@ def getUrls(qs):
     except apiclient.errors.HttpError,e:
       print("google cse status:"+str(e.resp.status))
       if e.resp.status == 403:
-        print("Google Quota Exceeded, switching to Archive")
-      return ["error"]
+        print("Google Quota Exceeded")
+      return None
       
     except:
       print("google cse:"+str(sys.exc_info()[0]))
-      return ["error"]
-
-      
+      return None 
 
   return images
 
@@ -134,6 +132,11 @@ def getUrls(qs):
 if __name__ == '__main__':
   import words
   urls=getUrls(words.getWords())
+  if urls == None:
+    print "Google Error"
+    exit(1)
+  if len(urls) == 0:
+    print "no urls!"
   for i in urls:
     print "full:",i['full']
     print "thumb:",i['thumb']
