@@ -77,7 +77,6 @@ def putArchive(choices):
     try:
       if debug: print "doing archive"
       tmpFile="%s/%s/%s"%(home,config.specs['tmpdir'],"tarFiles")
-      os.remove(tmpFile)
       adir=config.specs["archiveDir"]
       cdir=DisplayHandler.getArchiveCache()
       textName=cdir+"/"+config.specs['archiveTextName']
