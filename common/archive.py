@@ -15,8 +15,9 @@ import sys
 import time
 import config
 import DisplayHandler
+import uuid
 
-debug=False
+debug=True
 
 global init
 init=False
@@ -71,7 +72,36 @@ def getArchive():
 
   return [images,choices]
   
-    
+def putArchive(choices):
+  if config.specs['doArchive']:
+    try:
+      if debug: print "doing archive"
+      tmpFile="%s/%s/%s"%(home,config.specs['tmpdir'],"tarFiles")
+      os.remove(tmpFile)
+      adir=config.specs["archiveDir"]
+      cdir=DisplayHandler.getArchiveCache()
+      textName=cdir+"/"+config.specs['archiveTextName']
+      cf=open(textName,"w")
+      cf.write("%s\n"%choices[0])
+      cf.write("%s\n"%choices[1])
+      cf.close()
+      afiles=glob.glob("%s/*.jpg"%cdir)
+      tfiles=glob.glob("%s/*.lkp"%cdir)
+      tf = open(tmpFile,"w")
+      for file in afiles:
+        if False: print "writing %s to %s"%(file,tmpFile)
+        fb = os.path.basename(file)
+        tf.write("%s\n"%fb)
+      for file in tfiles:
+        if False: print "writing %s to %s"%(file,tmpFile)
+        fb = os.path.basename(file)
+        tf.write("%s\n"%fb)
+      tf.close()
+      cmd = ["tar","-czf",adir+"/"+str(uuid.uuid4())+".tgz","-C",cdir,"-T",tmpFile]
+      if debug: print "cmd %s"%cmd
+      subprocess.check_output(cmd)
+    except subprocess.CalledProcessError, e:
+      print "Error %s"%(e)
 
 if __name__ == '__main__':
   rval=getArchive()

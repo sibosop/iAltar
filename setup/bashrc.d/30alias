@@ -1,3 +1,5 @@
 alias vi=vim
 alias tlog='tail -f /var/log/syslog'
 alias cli='pushd $clidir;./ialtarcli.py;popd'
+
+

@@ -131,7 +131,8 @@ class masterThread(threading.Thread):
       else:
         print("%s unimplemented type %s switching to archive"%(self.name,searchType))
         searchType = 'Archive'
-
+      if searchType != 'Archive':
+        archive.putArchive(choices)
       if len(imageHosts) != 0:
         numImages = len(images)
         imagesPerHost = numImages/len(imageHosts)
