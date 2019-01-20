@@ -15,6 +15,7 @@
   "wordList" : ["corncob_lowercase.txt"],
   "credFile" : "/media/pi/ARCHIVE/creds.txt",
   "doArchive" : true,
+  "watchdogTimeout" : 10,
   "hosts" : [
     {
       "isMaster": true,
