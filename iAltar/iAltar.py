@@ -18,6 +18,7 @@ import displayImage
 import random
 import Master
 import PhraseHandler
+import watchdog
 
 masterThread=None
 debug = True
@@ -35,6 +36,9 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if debug: print("config path"+args.config[0])
     config.load(args.config[0])
+    wd = watchdog.WatchdogThread()
+    wd.setDaemon(True)
+    wd.start()
     host.setHostPort(config.specs['iAltarServerPort'])
     server.cmdHandler = CmdHandler.handleCmd
     sst = server.serverThread(config.specs['iAltarServerPort'])
@@ -43,16 +47,16 @@ if __name__ == '__main__':
     dtype = host.getLocalAttr('displayType') 
     if dtype == 'Image':
       displayImage.setup()
-      displayThread = DisplayHandler.displayThread()
+      displayThread = DisplayHandler.displayThread(wd)
       displayThread.setDaemon(True)
       displayThread.start()
     if dtype == 'Phrase':
       displayImage.setup()
-      PhraseThread = PhraseHandler.phraseThread()
+      PhraseThread = PhraseHandler.phraseThread(wd)
       PhraseThread.setDaemon(True)
       PhraseThread.start()
     if host.getLocalAttr('isMaster'):
-      masterThread = Master.masterThread()
+      masterThread = Master.masterThread(wd)
       masterThread.setDaemon(True)
       masterThread.start()
 

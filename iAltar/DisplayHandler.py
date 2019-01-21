@@ -17,6 +17,7 @@ import glob
 import time
 import displayImage
 import random
+import watchdog
 debug=True
 
 currentId = None;
@@ -106,10 +107,12 @@ def clearCache(args):
 
 
 class displayThread(threading.Thread):
-  def __init__(self):
+  def __init__(self,watchdog):
     super(displayThread,self).__init__()
     self.name = "displayThread"
     print("starting: %s"%self.name)
+    self.watchdog = watchdog
+    self.watchdog.add(self)
 
 
   def run(self):
@@ -122,6 +125,7 @@ class displayThread(threading.Thread):
     displayImage.displayImage(splash)
     
     while True:
+      self.watchdog.feed(self)
       path = getImageDir()
       if path is None:
         time.sleep(1)

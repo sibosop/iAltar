@@ -5,7 +5,7 @@
   "tmpdir" : "GitProjects/iAltar/tmp",
   "fontDir" : "GitProjects/iAltar/config",
   "displayTimeRange" : [3,8],
-  "defaultSearchType" : "Google",
+  "defaultSearchType" : "Archive",
   "archiveDir" : "/media/pi/ARCHIVE/ArchiveImages/",
   "archiveTextName" : "newText.lkp",
   "masterSleepInterval" : 30,
@@ -15,7 +15,7 @@
   "wordList" : ["corncob_lowercase.txt"],
   "credFile" : "/media/pi/ARCHIVE/creds.txt",
   "doArchive" : true,
-  "watchdogTimeout" : 10,
+  "watchdogTimeout" : 240,
   "hosts" : [
     {
       "isMaster": true,

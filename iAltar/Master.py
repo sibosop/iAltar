@@ -25,6 +25,7 @@ import urllib2
 import datetime
 import traceback
 import ssl
+import watchdog
 
 
 searchType=None
@@ -77,13 +78,15 @@ def urlsToImages(urls):
 
 debug=True
 class masterThread(threading.Thread):
-  def __init__(self):
+  def __init__(self,watchdog):
     super(masterThread,self).__init__()
     self.name = "masterThread"
     print("starting: %s"%self.name)
     global searchType
     searchType = config.specs['defaultSearchType'];
     print("%s: default search type: %s"%(self.name,searchType))
+    self.watchdog = watchdog
+    self.watchdog.add(self)
 
   def run(self):
     global searchType
@@ -106,6 +109,7 @@ class masterThread(threading.Thread):
         phraseHosts.append(ip)
 
     while True:
+      self.watchdog.feed(self)
       cacheId = random.randint(10000,20000)
       images=[]
       choices=[]

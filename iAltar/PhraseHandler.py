@@ -12,6 +12,7 @@ import threading
 import host
 import time
 import displayImage
+import watchdog
 
 phraseMutex = threading.Lock()
 phrase = []
@@ -35,10 +36,12 @@ def getPhrase():
   return rval
 
 class phraseThread(threading.Thread):
-  def __init__(self):
+  def __init__(self,watchdog):
     super(phraseThread,self).__init__()
     self.name = "pisplayThread"
     print("starting: %s"%self.name)
+    self.watchdog = watchdog
+    self.watchdog.add(self)
 
   def run(self):
     lastPhrase = []
@@ -46,6 +49,7 @@ class phraseThread(threading.Thread):
     print("%s displaying f:%s"%(name,splash))
     displayImage.displayImage(splash)
     while True:
+      self.watchdog.feed(self)
       p = getPhrase()
       if p != lastPhrase:
         print("%s Displaying Phrase %s"%(self.name,p))
