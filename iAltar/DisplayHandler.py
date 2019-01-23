@@ -152,12 +152,15 @@ class displayThread(threading.Thread):
         print("resetting imageIndex");
         imageIndex = 0
       f = afiles[imageIndex]
+      imageIndex += 1
       print("displaying f:%s"%f)
-      displayImage.displayImage(f)
+      if displayImage.displayImage(f) == False:
+        print "skipping bad images:%s"%f
+        time.sleep(.1)
+        continue
       next = (random.random() * (maxTime - minTime)) + minTime
       print("next display %f"%next)
       time.sleep(next)
-      imageIndex += 1
 
       
 

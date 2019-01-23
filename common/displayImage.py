@@ -48,6 +48,7 @@ def displayImage(img):
     print("display Image can't render "+img)
     splash = "%s/%s"%(home,config.specs['splashImg'])
     image = pygame.image.load(splash)
+    return False
   ws=screen.get_width()
   hs=screen.get_height()
   rs = float(ws)/float(hs)
@@ -90,6 +91,7 @@ def displayImage(img):
   screen.fill((0,0,0))
   screen.blit(simage,(xoffset,yoffset)) 
   pygame.display.flip() 
+  return True
 
 
 
