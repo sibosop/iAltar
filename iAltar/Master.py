@@ -56,13 +56,13 @@ def urlsToImages(urls):
         if debug: print( "open image type:"+t+" image:",url[t] )
         req = urllib2.Request(url[t],headers={'User-Agent' : "Magic Browser"})
         gcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
-        con = urllib2.urlopen( req, context=gcontext )
+        con = urllib2.urlopen( req, context=gcontext,timeout=20)
         raw_img = con.read()
         #raw_img = urllib2.urlopen(images[imageIndex]).read()
         #if debug: print( "elapsed:"+str(time.time() - startTime))
         break;
-      except:
-        print("return from exception for type %s url %s"%(t,url[t]))
+      except Exception as e:
+        print "return from exception for type %s url %s: %s"%(t,url[t],e)
         #print("elapsed:"+str(time.time() - startTime))
         #print(datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
         #print(traceback.format_exc())
