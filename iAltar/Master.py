@@ -54,10 +54,11 @@ def urlsToImages(urls):
       try:
         #startTime = time.time()
         if debug: print( "open image type:"+t+" image:",url[t] )
-        req = urllib2.Request(url[t],headers={'User-Agent' : "Magic Browser"})
-        gcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
-        con = urllib2.urlopen( req, context=gcontext,timeout=20)
-        raw_img = con.read()
+        response=requests.get(url[t],timeout=20)
+        #req = urllib2.Request(url[t],headers={'User-Agent' : "Magic Browser"})
+        #gcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+        #con = urllib2.urlopen( req, context=gcontext,timeout=20)
+        raw_img = response.content
         #raw_img = urllib2.urlopen(images[imageIndex]).read()
         #if debug: print( "elapsed:"+str(time.time() - startTime))
         break;
