@@ -22,6 +22,10 @@ def doProbe(args):
   state['status'] = "ok"
   state['displayType'] = host.getLocalAttr('displayType')
   state['displayId'] = DisplayHandler.currentId
+  state['isMaster']=False
+  if host.getLocalAttr('isMaster'):
+    state['isMaster'] = True
+    state['searchType'] = Master.searchType
   return json.dumps(state)
 
 
