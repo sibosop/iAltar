@@ -1,0 +1,20 @@
+{
+  "masterVolume" : 40,
+  "soundMaxVol" : 0.5,
+  "subnet" : "192.168.20",
+  "tmpdir" : "GitProjects/iAltar/tmp",
+  "fontDir" : "GitProjects/iAltar/config",
+  "displayTimeRange" : [3,8],
+  "defaultSearchType" : "Archive",
+  "archiveDir" : "/media/pi/ARCHIVE/ArchiveImages/",
+  "archiveTextName" : "newText.lkp",
+  "masterSleepInterval" : 30,
+  "splashImg" : "GitProjects/iAltar/imgs/splash.jpg",
+  "textlineSpacing" : 20,
+  "fontFile" : "Watchword_bold_demo.otf",
+  "wordList" : ["corncob_lowercase.txt"],
+  "credFile" : "/media/pi/ARCHIVE/creds.txt",
+  "doArchive" : true,
+  "watchdogTimeout" : 240,
+  "iAltarServerPort": 8085
+}

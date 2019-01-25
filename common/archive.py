@@ -39,10 +39,10 @@ def getArchive():
     random.seed()
     init=True
     for a in glob.glob(adir+"/*.tgz"):
-      if debug: print("a: %s"%a)
+      if False: print("a: %s"%a)
       archives.append(a)
   n = random.randint(0,len(archives)-1)
-  print("n:"+str(n)+" archive:"+archives[n])
+  if debug: print("n:"+str(n)+" archive:"+archives[n])
   try:  
     cmd=["tar","xzf",archives[n],"-C",cdir]
     if debug: print( "cmd: %s"%cmd)

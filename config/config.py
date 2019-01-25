@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 import os
 home = os.environ['HOME']
-defaultSpecPath = home+"/GitProjects/iAltar/config/ialtar.json"
+defaultSpecDir="%s/GitProjects/iAltar/config"%home
+defaultSpecPath = "%s/ialtar.json"%defaultSpecDir
 import json
 import urllib2
 from threading import Lock
@@ -10,12 +11,25 @@ mutex = Lock()
 specs = None
 
 debug=False
+def includeFiles():
+  global specs
+  if 'include' not in specs:
+    return
+  if debug: print "config: doing include"
+  for f in specs['include']:
+    path="%s/%s.json"%(defaultSpecDir,f)
+    if debug: print"adding %s to specs"%path
+    with open(path) as sf:
+      tmp = json.load(sf)
+    specs.update(tmp)
+
 
 def load(specPath=defaultSpecPath):
   global specs
   if debug: print("config: specPath%s"%specPath)
   with open(specPath) as f:
     specs = json.load(f)
+  includeFiles()
   if debug: print("%s"%(specs))
   
   
@@ -26,3 +40,7 @@ def internetOn():
   except urllib2.URLError as err: 
     return False
     
+
+
+if __name__ == '__main__':
+  load();

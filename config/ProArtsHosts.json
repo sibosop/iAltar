@@ -1,0 +1,36 @@
+{
+  "hosts" : [
+    {
+      "isMaster": true,
+      "name": "pi112",
+      "ip": "192.168.20.112",
+      "isRaspberry" : true,
+      "fontSize" : 90,
+      "displayType": "Image"
+    },
+    {
+      "isMaster": false,
+      "name": "pi109",
+      "ip": "192.168.20.109",
+      "isRaspberry" : true,
+      "fontSize" : 90,
+      "displayType": "Image"
+    },
+    {
+      "isMaster": false,
+      "name": "pi108",
+      "ip": "192.168.20.108",
+      "isRaspberry" : true,
+      "fontSize" : 90,
+      "displayType": "Phrase"
+    },
+    {
+      "isMaster": false,
+      "name": "pi1110",
+      "ip": "192.168.20.110",
+      "isRaspberry" : true,
+      "fontSize" : 90,
+      "displayType": "Image"
+    }
+  ]
+}
