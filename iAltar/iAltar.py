@@ -19,6 +19,7 @@ import random
 import Master
 import PhraseHandler
 import watchdog
+import voice
 
 masterThread=None
 debug = True
@@ -46,6 +47,7 @@ if __name__ == '__main__':
     sst.start()
     hasDisplay = host.getLocalAttr('hasDisplay') 
     wantsPhrase = host.getLocalAttr('wantsPhrase')
+    hasVoice = host.getLocalAttr('hasVoice')
     if hasDisplay:
       dtype = host.getLocalAttr('displayType') 
       if dtype == 'Image':
@@ -58,14 +60,20 @@ if __name__ == '__main__':
         displayImage.setup()
 
     if wantsPhrase:
-        PhraseThread = PhraseHandler.phraseThread(wd)
-        PhraseThread.setDaemon(True)
-        PhraseThread.start()
+      PhraseThread = PhraseHandler.phraseThread(wd)
+      PhraseThread.setDaemon(True)
+      PhraseThread.start()
 
     if host.getLocalAttr('isMaster'):
       masterThread = Master.masterThread(wd)
       masterThread.setDaemon(True)
       masterThread.start()
+
+    if hasVoice:
+      voiceThread = voice.VoiceThread()
+      voiceThread.setDaemon(True)
+      voiceThread.start()
+    
 
     while True:
       try:

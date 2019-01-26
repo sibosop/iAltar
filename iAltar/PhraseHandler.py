@@ -13,6 +13,8 @@ import host
 import time
 import displayImage
 import watchdog
+import textSpeaker
+import voice
 
 phraseMutex = threading.Lock()
 phrase = []
@@ -38,12 +40,13 @@ def getPhrase():
 class phraseThread(threading.Thread):
   def __init__(self,watchdog):
     super(phraseThread,self).__init__()
-    self.name = "pisplayThread"
+    self.name = "phraseThread"
     print("starting: %s"%self.name)
     self.watchdog = watchdog
     self.watchdog.add(self)
     self.hasDisplay = host.getLocalAttr("hasDisplay")
     self.displayType = host.getLocalAttr("displayType")
+    self.hasVoice = host.getLocalAttr("hasVoice")
 
   def run(self):
     lastPhrase = []
@@ -58,10 +61,8 @@ class phraseThread(threading.Thread):
         print("%s Displaying Phrase %s"%(self.name,p))
         if self.hasDisplay and self.displayType == "Phrase":
             displayImage.printText(p)
+        if self.hasVoice:
+          voice.sendPhrase(p)
         lastPhrase = p
       time.sleep(1)
 
-
-
-      
-      

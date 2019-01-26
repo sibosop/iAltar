@@ -153,6 +153,13 @@ def getLocalAttr(a):
   if debug: print("Get Local Attr "+a+":"+str(rval))
   return rval
 
+def internetOn():
+  try:
+    urllib2.urlopen('http://216.58.192.142', timeout=1)
+    return True
+  except urllib2.URLError as err: 
+    return False
+
 if __name__ == '__main__':
   run=True
   parser = argparse.ArgumentParser()
