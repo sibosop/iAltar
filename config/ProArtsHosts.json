@@ -6,7 +6,10 @@
       "ip": "192.168.20.112",
       "isRaspberry" : true,
       "fontSize" : 90,
-      "displayType": "Image"
+      "hasDisplay": true,
+      "displayType" : "Image",
+      "wantsPhrase" : false,
+      "hasVoice" : false
     },
     {
       "isMaster": false,
@@ -14,7 +17,10 @@
       "ip": "192.168.20.109",
       "isRaspberry" : true,
       "fontSize" : 90,
-      "displayType": "Image"
+      "hasDisplay": true,
+      "displayType" : "Image",
+      "wantsPhrase" : false,
+      "hasVoice" : false
     },
     {
       "isMaster": false,
@@ -22,7 +28,10 @@
       "ip": "192.168.20.108",
       "isRaspberry" : true,
       "fontSize" : 90,
-      "displayType": "Phrase"
+      "hasDisplay": true,
+      "displayType" : "Phrase",
+      "wantsPhrase" : true,
+      "hasVoice" : true
     },
     {
       "isMaster": false,
@@ -30,7 +39,10 @@
       "ip": "192.168.20.110",
       "isRaspberry" : true,
       "fontSize" : 90,
-      "displayType": "Image"
+      "hasDisplay": true,
+      "displayType" : "Image",
+      "wantsPhrase" : false,
+      "hasVoice" : false
     }
   ]
 }

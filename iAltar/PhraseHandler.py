@@ -42,18 +42,22 @@ class phraseThread(threading.Thread):
     print("starting: %s"%self.name)
     self.watchdog = watchdog
     self.watchdog.add(self)
+    self.hasDisplay = host.getLocalAttr("hasDisplay")
+    self.displayType = host.getLocalAttr("displayType")
 
   def run(self):
     lastPhrase = []
     splash = "%s/%s"%(home,config.specs['splashImg'])
-    print("%s displaying f:%s"%(name,splash))
-    displayImage.displayImage(splash)
+    if self.hasDisplay:
+      print("%s displaying f:%s"%(name,splash))
+      displayImage.displayImage(splash)
     while True:
       self.watchdog.feed(self)
       p = getPhrase()
       if p != lastPhrase:
         print("%s Displaying Phrase %s"%(self.name,p))
-        displayImage.printText(p)
+        if self.hasDisplay and self.displayType == "Phrase":
+            displayImage.printText(p)
         lastPhrase = p
       time.sleep(1)
 

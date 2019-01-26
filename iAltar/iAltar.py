@@ -44,17 +44,24 @@ if __name__ == '__main__':
     sst = server.serverThread(config.specs['iAltarServerPort'])
     sst.setDaemon(True)
     sst.start()
-    dtype = host.getLocalAttr('displayType') 
-    if dtype == 'Image':
-      displayImage.setup()
-      displayThread = DisplayHandler.displayThread(wd)
-      displayThread.setDaemon(True)
-      displayThread.start()
-    if dtype == 'Phrase':
-      displayImage.setup()
-      PhraseThread = PhraseHandler.phraseThread(wd)
-      PhraseThread.setDaemon(True)
-      PhraseThread.start()
+    hasDisplay = host.getLocalAttr('hasDisplay') 
+    wantsPhrase = host.getLocalAttr('wantsPhrase')
+    if hasDisplay:
+      dtype = host.getLocalAttr('displayType') 
+      if dtype == 'Image':
+        displayImage.setup()
+        displayThread = DisplayHandler.displayThread(wd)
+        displayThread.setDaemon(True)
+        displayThread.start()
+
+      if dtype == 'Phrase':
+        displayImage.setup()
+
+    if wantsPhrase:
+        PhraseThread = PhraseHandler.phraseThread(wd)
+        PhraseThread.setDaemon(True)
+        PhraseThread.start()
+
     if host.getLocalAttr('isMaster'):
       masterThread = Master.masterThread(wd)
       masterThread.setDaemon(True)

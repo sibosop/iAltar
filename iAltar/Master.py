@@ -102,11 +102,13 @@ class masterThread(threading.Thread):
         DisplayHandler.clearCache(None)
       else:
         host.sendToHost(ip,{'cmd' : 'ClearCache' , 'args' : None});
-      dtype = host.getAttr(ip,'displayType')
-      print("%s: display type: %s"%(self.name,dtype))
-      if dtype == 'Image':
+
+      if host.getAttr(ip,'displayType') == 'Image':
+        print("%s: display type for %s: image"%(self.name,ip))
         imageHosts.append(ip)
-      if dtype == 'Phrase':
+
+      if host.getAttr(ip,'wantsPhrase'):
+        print("%s: wants phrase for %s: "%(self.name,ip))
         phraseHosts.append(ip)
 
     while True:
