@@ -31,7 +31,7 @@
       "hasDisplay": true,
       "displayType" : "Phrase",
       "wantsPhrase" : true,
-      "hasVoice" : true
+      "hasVoice" : false
     },
     {
       "isMaster": false,

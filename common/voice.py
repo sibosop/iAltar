@@ -13,6 +13,7 @@ import threading
 import soundTrack as st
 import textSpeaker
 import time
+import config
 import pygame
 
 debug = False
@@ -30,7 +31,7 @@ voiceMinVol=.7
 
 def sendPhrase(p):
   global voiceSound
-  global VoiceChanged
+  global voiceChanged
   speakText = p[0]+" "+p[1]
   file=None
   while file is None:
@@ -49,6 +50,7 @@ class VoiceThread(threading.Thread):
   def run(self):
     global voiceSound
     global voiceChanged
+    voiceMaxVol = config.specs['voiceMaxVol'] 
     while True:
       voiceMutex.acquire()
       vt = voiceSound
@@ -65,8 +67,8 @@ class VoiceThread(threading.Thread):
           reps = 1
         if debugVoiceTrack:print("VoiceReadyEvent reps:"+str(reps))
         for i in range(reps):
-          l = (random.random()*(1.0-voiceMinVol))+voiceMinVol
-          r = (random.random()*(1.0-voiceMinVol))+voiceMinVol
+          l = (random.random()*(voiceMaxVol-voiceMinVol))+voiceMinVol
+          r = (random.random()*(voiceMaxVol-voiceMinVol))+voiceMinVol
           voiceMutex.acquire()
           st.playSound(vt,l,r)
           voiceMutex.release()
