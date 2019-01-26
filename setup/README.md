@@ -8,3 +8,4 @@
   ```
 * `cd $HOME`
 * `ln -s $HOME/GitProjects/iAltar/setup/bashrc.d`
+* `ln -s $HOME/GitProjects/iAltar/setup/vimrc .vimrc`
