@@ -8,3 +8,6 @@ New implementation of artDisplay project
 check the log file daily since the directory is now smaller, change weekly to daily
 keep only two days
 sudo vi /etc/logrotate.conf
+
+### get rid of user messages log which are redondant
+`sudo cp $HOME/GitProjects/iAltar/rsyslog.conf /etc/rsyslog.conf`
