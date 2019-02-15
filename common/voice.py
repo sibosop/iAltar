@@ -35,7 +35,8 @@ def sendPhrase(p):
   speakText = p[0]+" "+p[1]
   file=None
   while file is None:
-    file=textSpeaker.makeSpeakFile(speakText)
+    lang = random.choice(config.specs['langList'])
+    file=textSpeaker.makeSpeakFile(speakText,lang)
   print "voice sound set to: %s"%file
   voiceMutex.acquire()
   voiceSound = pygame.mixer.Sound(file)
