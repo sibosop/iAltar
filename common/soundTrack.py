@@ -12,6 +12,7 @@ import time
 import threading
 import numpy as np
 import pygame
+import config
 
 debugSoundTrack=True
 eventMin=100
@@ -61,7 +62,7 @@ def isWav(f):
     ext = f.rindex(".wav")
   except ValueError:
     if debugSoundTrack:
-      print(sfile+ ":not wav file")
+      print("%s :not wav file"%f)
     return False
   flag = f[ext:]
   if debugSoundTrack:
@@ -70,15 +71,6 @@ def isWav(f):
     return False
   return True
 
-def makeEventChoice(filenames):
-  done = False
-  while not done:
-    if filenames is None:
-      print("eventdir ="+config.specs['eventDir'])
-      filenames = next(os.walk( config.specs['eventDir']))[2]
-    choice = random.choice(filenames)
-    done = isWav(choice)
-  return (choice,filenames)
 
 
 def playSound(sound,l,r):
@@ -95,6 +87,24 @@ def playSound(sound,l,r):
   
 
 class playEvent(threading.Thread):
+  def makeEventChoice(self):
+    done = False
+    choice = None
+    while not done:
+      choice = random.choice(self.filenames)
+      done = isWav(choice)
+    if debugSoundTrack: print "returning %s"%choice
+    return choice
+
+  def __init__(self,watchdog):
+    super(playEvent,self).__init__()
+    self.name = "playEvent"
+    self.eventDir = config.specs['eventDir']
+    self.filenames = next(os.walk(self.eventDir))[2]
+    print "%s"%self.filenames
+    self.watchdog = watchdog
+    self.watchdog.add(self)
+
   def run(self):
     global backgroundCount
     global backgroundCount
@@ -106,15 +116,12 @@ class playEvent(threading.Thread):
     global initialEventTimeThreshold
     global eventTimeMaxThreshold
     global eventMutex
-    filenames=None
-    print("play event thread")
+    print self.name
     while True:
       while True:
-        filenames=None
-        vars = makeEventChoice(filenames)
-        filenames = vars[1]
-        choice = config.specs['eventDir']+vars[0]
-        print("soundTrack choice:"+choice)
+        self.watchdog.feed(self)
+        choice = "%s/%s"%(self.eventDir,self.makeEventChoice())
+        print "%s: choice %s:"%(self.name,choice)
         try:
           sound = pygame.mixer.Sound(file=choice)
           len = sound.get_length()

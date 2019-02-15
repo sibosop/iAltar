@@ -8,6 +8,7 @@
   "displayTimeRange" : [3,8],
   "defaultSearchType" : "Archive",
   "archiveDir" : "/media/pi/ARCHIVE/ArchiveImages/",
+  "eventDir" : "/media/pi/SOUND/events/",
   "archiveTextName" : "newText.lkp",
   "masterSleepInterval" : 30,
   "splashImg" : "GitProjects/iAltar/imgs/splash.jpg",

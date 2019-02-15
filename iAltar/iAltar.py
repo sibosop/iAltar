@@ -20,6 +20,7 @@ import Master
 import PhraseHandler
 import watchdog
 import voice
+import soundTrack
 
 masterThread=None
 debug = True
@@ -58,6 +59,13 @@ if __name__ == '__main__':
 
       if dtype == 'Phrase':
         displayImage.setup()
+
+    hasMusic = host.getLocalAttr('hasMusic')
+    if hasMusic:
+      MusicThread = soundTrack.playEvent(wd)
+      MusicThread.setDaemon(True)
+      MusicThread.start()
+      
 
     if wantsPhrase:
       PhraseThread = PhraseHandler.phraseThread(wd)
