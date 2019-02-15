@@ -21,6 +21,7 @@ import PhraseHandler
 import watchdog
 import voice
 import soundTrack
+import shutdown
 
 masterThread=None
 debug = True
@@ -81,6 +82,11 @@ if __name__ == '__main__':
       voiceThread = voice.VoiceThread()
       voiceThread.setDaemon(True)
       voiceThread.start()
+
+    if host.getLocalAttr('hasPowerCheck'):
+      shutdownThread = shutdown.ShutdownThread()
+      shutdownThread.setDaemon(True)
+      shutdownThread.start()
     
 
     while True:

@@ -10,7 +10,8 @@
       "displayType" : "Image",
       "wantsPhrase" : false,
       "hasVoice" : false,
-      "hasMusic" : false
+      "hasMusic" : false,
+      "hasPowerCheck" : true
     },
     {
       "isMaster": false,
@@ -22,7 +23,8 @@
       "displayType" : "Image",
       "wantsPhrase" : false,
       "hasVoice" : false,
-      "hasMusic" : false
+      "hasMusic" : false,
+      "hasPowerCheck" : false
     },
     {
       "isMaster": false,
@@ -34,7 +36,8 @@
       "displayType" : "Phrase",
       "wantsPhrase" : true,
       "hasVoice" : true,
-      "hasMusic" : true
+      "hasMusic" : true,
+      "hasPowerCheck" : false
     },
     {
       "isMaster": false,
@@ -46,7 +49,8 @@
       "displayType" : "Image",
       "wantsPhrase" : false,
       "hasVoice" : false,
-      "hasMusic" : false
+      "hasMusic" : false,
+      "hasPowerCheck" : false
     }
   ]
 }
