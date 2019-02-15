@@ -9,7 +9,8 @@
       "hasDisplay": true,
       "displayType" : "Image",
       "wantsPhrase" : false,
-      "hasVoice" : false
+      "hasVoice" : false,
+      "hasMusic" : false
     },
     {
       "isMaster": false,
@@ -20,7 +21,8 @@
       "hasDisplay": true,
       "displayType" : "Image",
       "wantsPhrase" : false,
-      "hasVoice" : false
+      "hasVoice" : false,
+      "hasMusic" : false
     },
     {
       "isMaster": false,
@@ -31,7 +33,8 @@
       "hasDisplay": true,
       "displayType" : "Phrase",
       "wantsPhrase" : true,
-      "hasVoice" : false
+      "hasVoice" : true,
+      "hasMusic" : true
     },
     {
       "isMaster": false,
@@ -42,7 +45,8 @@
       "hasDisplay": true,
       "displayType" : "Image",
       "wantsPhrase" : false,
-      "hasVoice" : false
+      "hasVoice" : false,
+      "hasMusic" : false
     }
   ]
 }
