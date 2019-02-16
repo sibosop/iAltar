@@ -18,6 +18,6 @@
   "credFile" : "/media/pi/ARCHIVE/creds.txt",
   "doArchive" : true,
   "watchdogTimeout" : 240,
-  "langList" : ["en", "en-au", "en-uk", "fr", "sv", "da", "tr", "de","es"],
+  "langList" : ["en", "en-au", "en-uk"],
   "iAltarServerPort": 8085
 }
