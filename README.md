@@ -11,7 +11,7 @@ check the log file daily since the directory is now smaller, change weekly to da
 keep only two days
 sudo vi /etc/logrotate.conf
 
-### get rid of user messages log which are redondant
+### get rid of user messages log which are redundant
 `sudo cp $HOME/GitProjects/iAltar/rsyslog.conf /etc/rsyslog.conf`
 
 ### sound setup info
