@@ -10,7 +10,7 @@ from threading import Lock
 mutex = Lock()
 specs = None
 
-debug=False
+debug=True
 def includeFiles():
   global specs
   if 'include' not in specs:

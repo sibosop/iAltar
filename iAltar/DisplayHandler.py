@@ -116,6 +116,7 @@ class displayThread(threading.Thread):
 
 
   def run(self):
+    print "%s starting"%self.name
     afiles = []
     (minTime,maxTime) = config.specs["displayTimeRange"]
     lastImageDir=""

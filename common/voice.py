@@ -16,7 +16,7 @@ import time
 import config
 import pygame
 
-debug = False
+debug = True
 debugFound = True
 debugVoiceTrack = True
 

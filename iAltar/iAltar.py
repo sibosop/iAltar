@@ -44,6 +44,7 @@ if __name__ == '__main__':
     wd.start()
     host.setHostPort(config.specs['iAltarServerPort'])
     server.cmdHandler = CmdHandler.handleCmd
+    print "%s starting Server Thread"%pname
     sst = server.serverThread(config.specs['iAltarServerPort'])
     sst.setDaemon(True)
     sst.start()
@@ -53,37 +54,44 @@ if __name__ == '__main__':
     if hasDisplay:
       dtype = host.getLocalAttr('displayType') 
       if dtype == 'Image':
+        print "%s starting Display"%pname
         displayImage.setup()
         displayThread = DisplayHandler.displayThread(wd)
         displayThread.setDaemon(True)
         displayThread.start()
 
       if dtype == 'Phrase':
+        print "%s starting Phrase"%pname
         displayImage.setup()
 
     hasMusic = host.getLocalAttr('hasMusic')
     if hasMusic:
+      print "%s starting Music"%pname
       MusicThread = soundTrack.playEvent(wd)
       MusicThread.setDaemon(True)
       MusicThread.start()
       
 
     if wantsPhrase:
+      print "%s starting Phrase "%pname
       PhraseThread = PhraseHandler.phraseThread(wd)
       PhraseThread.setDaemon(True)
       PhraseThread.start()
 
     if host.getLocalAttr('isMaster'):
+      print "%s starting Master "%pname
       masterThread = Master.masterThread(wd)
       masterThread.setDaemon(True)
       masterThread.start()
 
     if hasVoice:
+      print "%s starting Voice "%pname
       voiceThread = voice.VoiceThread()
       voiceThread.setDaemon(True)
       voiceThread.start()
 
     if host.getLocalAttr('hasPowerCheck'):
+      print "%s starting Power "%pname
       shutdownThread = shutdown.ShutdownThread()
       shutdownThread.setDaemon(True)
       shutdownThread.start()
@@ -97,11 +105,17 @@ if __name__ == '__main__':
         server.doExit(5)
         break
       except Exception as e:
-        print(pname+":"+str(e))
+        if e is None:
+          print "pname what the fuck e=None"
+        else:
+          print "%s Main error: %s"%(pname,e)
         server.doExit(5)
         break
   except Exception, e:
-    print("pname Main error:"+str(e))
+    if e is None:
+      print "pname what the fuck e=None"
+    else:
+      print "%s Main error: %s"%(pname,e)
     server.doExit(5)
   print(pname+" exiting")
   server.doExit(0)
