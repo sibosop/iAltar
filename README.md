@@ -8,7 +8,11 @@ New implementation of artDisplay project
 ### setup env
 * `cd $HOME/GitProjects/iAltar/setup`
 * `cat README.md`
+* log out, log back in
 
+### fix the fstab
+* `cd $ialtar`
+* `sudo cp fstab /etc/fstab`
 
 ### make sure the syslog rotation is daily not weekly
 check the log file daily since the directory is now smaller, change weekly to daily
@@ -17,9 +21,15 @@ sudo vi /etc/logrotate.conf
 
 ### get rid of user messages log which are redundant
 `sudo cp $HOME/GitProjects/iAltar/rsyslog.conf /etc/rsyslog.conf`
+### remove or setup network
+`sudo vi /etc/wpa_supplicant/wpa_supplicant.conf`
+### update the support packages (fix swap)
+* `cd $ialtar`
+* `./packageSetup.sh`
 
 ### Crontab entry the redirects to syslog
-`@reboot sleep 20; /home/pi/GitProjects/iAltar/iAltar/iAltarWrap.sh 2>&1 | logger -t iAltarWrap`
+* `@reboot sleep 10; /home/pi/GitProjects/artDisplay/shared/asoundConfig.py`
+* `@reboot sleep 20; /home/pi/GitProjects/iAltar/iAltar/iAltarWrap.sh 2>&1 | logger -t iAltarWrap`
 ### for setups with alternate config files
 `@reboot sleep 20 ; /home/pi/GitProjects/iAltar/iAltar/iAltarWrap.sh -c /home/pi/GitProjects/iAltar/config/ProArts.json 2>&1 | logger -t iAltarWrap`
 
