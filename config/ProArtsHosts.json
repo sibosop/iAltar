@@ -1,0 +1,57 @@
+{
+  "subnet" : "192.168.50",
+  "hosts" : [
+    {
+      "isMaster": true,
+      "name": "pi100",
+      "ip": "192.168.50.100",
+      "isRaspberry" : true,
+      "fontSize" : 90,
+      "hasDisplay": true,
+      "displayType" : "Image",
+      "wantsPhrase" : false,
+      "hasVoice" : false,
+      "hasMusic" : false,
+      "hasPowerCheck" : true
+    },
+    {
+      "isMaster": false,
+      "name": "pi101",
+      "ip": "192.168.50.101",
+      "isRaspberry" : true,
+      "fontSize" : 90,
+      "hasDisplay": true,
+      "displayType" : "Image",
+      "wantsPhrase" : false,
+      "hasVoice" : false,
+      "hasMusic" : false,
+      "hasPowerCheck" : false
+    },
+    {
+      "isMaster": false,
+      "name": "pi102",
+      "ip": "192.168.50.102",
+      "isRaspberry" : true,
+      "fontSize" : 90,
+      "hasDisplay": true,
+      "displayType" : "Phrase",
+      "wantsPhrase" : true,
+      "hasVoice" : true,
+      "hasMusic" : true,
+      "hasPowerCheck" : false
+    },
+    {
+      "isMaster": false,
+      "name": "pi103",
+      "ip": "192.168.50.103",
+      "isRaspberry" : true,
+      "fontSize" : 90,
+      "hasDisplay": true,
+      "displayType" : "Image",
+      "wantsPhrase" : false,
+      "hasVoice" : false,
+      "hasMusic" : false,
+      "hasPowerCheck" : false
+    }
+  ]
+}
