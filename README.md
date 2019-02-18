@@ -1,10 +1,14 @@
 # iAltar
 New implementation of artDisplay project
+### git the source code
+`cd $HOME/GitProjects;git clone git@github.com:sibosop/iAltar.git`
+### update the os
+`sudo apt update`
+`sudo apt upgrade`
+### setup env
+`cd $HOME/GitProjects/iAltar/setup`
+`cat README.md`
 
-### Crontab entry the redirects to syslog
-`@reboot sleep 20; /home/pi/GitProjects/iAltar/iAltar/iAltarWrap.sh 2>&1 | logger -t iAltarWrap`
-### for setups with alternate config files
-`@reboot sleep 20 ; /home/pi/GitProjects/iAltar/iAltar/iAltarWrap.sh -c /home/pi/GitProjects/iAltar/config/ProArts.json 2>&1 | logger -t iAltarWrap`
 
 ### make sure the syslog rotation is daily not weekly
 check the log file daily since the directory is now smaller, change weekly to daily
@@ -13,6 +17,11 @@ sudo vi /etc/logrotate.conf
 
 ### get rid of user messages log which are redundant
 `sudo cp $HOME/GitProjects/iAltar/rsyslog.conf /etc/rsyslog.conf`
+
+### Crontab entry the redirects to syslog
+`@reboot sleep 20; /home/pi/GitProjects/iAltar/iAltar/iAltarWrap.sh 2>&1 | logger -t iAltarWrap`
+### for setups with alternate config files
+`@reboot sleep 20 ; /home/pi/GitProjects/iAltar/iAltar/iAltarWrap.sh -c /home/pi/GitProjects/iAltar/config/ProArts.json 2>&1 | logger -t iAltarWrap`
 
 ### sound setup info
 Setting up usb speakers/mic has the unfortunate feature of assigning usb 'cards' at random during bootup. This will need to be fixed automagically but until that happens:
