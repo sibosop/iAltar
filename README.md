@@ -2,13 +2,13 @@
 New implementation of artDisplay project
 ### git the source code
 `cd $HOME/GitProjects;git clone git@github.com:sibosop/iAltar.git`
-### update the os
-* `sudo apt update`
-* `sudo apt upgrade`
+### update the os use apt-get since apt tends to screw up terminal screens
+* `sudo apt-get update`
+* `sudo apt-get upgrade`
 
 ###### If you get stuck on wolfram
-* `sudo apt purge wolfram-engine`
-* `sudo apt upgrade`
+* `sudo apt-get purge wolfram-engine`
+* `sudo apt-get upgrade`
 
 ### setup env
 * `cd $HOME/GitProjects/iAltar/setup`
