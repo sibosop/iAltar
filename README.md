@@ -5,6 +5,11 @@ New implementation of artDisplay project
 ### update the os
 * `sudo apt update`
 * `sudo apt upgrade`
+
+###### If you get stuck on wolfram
+* `sudo apt purge wolfram-engine`
+* `sudo apt upgrade`
+
 ### setup env
 * `cd $HOME/GitProjects/iAltar/setup`
 * `cat README.md`
@@ -28,10 +33,12 @@ sudo vi /etc/logrotate.conf
 * `./packageSetup.sh`
 
 ### Crontab entry the redirects to syslog
-* `@reboot sleep 10; /home/pi/GitProjects/artDisplay/shared/asoundConfig.py`
-* `@reboot sleep 20; /home/pi/GitProjects/iAltar/iAltar/iAltarWrap.sh 2>&1 | logger -t iAltarWrap`
-### for setups with alternate config files
-`@reboot sleep 20 ; /home/pi/GitProjects/iAltar/iAltar/iAltarWrap.sh -c /home/pi/GitProjects/iAltar/config/ProArts.json 2>&1 | logger -t iAltarWrap`
+* `@reboot sleep 10; /home/pi/GitProjects/iAltar/config/asoundConfig.py -c /home/pi/GitProjects/iAltar/config/ProArts.json 2>&1 | logger -t iAltarWrap`
+
+* `@reboot sleep 20 ; /home/pi/GitProjects/iAltar/iAltar/iAltarWrap.sh -c /home/pi/GitProjects/iAltar/config/ProArts.json 2>&1 | logger -t iAltarWrap`
+
+
+
 
 ### sound setup info
 Setting up usb speakers/mic has the unfortunate feature of assigning usb 'cards' at random during bootup. This will need to be fixed automagically but until that happens:
