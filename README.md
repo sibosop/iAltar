@@ -3,11 +3,11 @@ New implementation of artDisplay project
 ### git the source code
 `cd $HOME/GitProjects;git clone git@github.com:sibosop/iAltar.git`
 ### update the os
-`sudo apt update`
-`sudo apt upgrade`
+* `sudo apt update`
+* `sudo apt upgrade`
 ### setup env
-`cd $HOME/GitProjects/iAltar/setup`
-`cat README.md`
+* `cd $HOME/GitProjects/iAltar/setup`
+* `cat README.md`
 
 
 ### make sure the syslog rotation is daily not weekly
