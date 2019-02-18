@@ -33,6 +33,7 @@ sudo vi /etc/logrotate.conf
 * `./packageSetup.sh`
 
 ### Crontab entry the redirects to syslog
+* `MAILTO=""`
 * `@reboot sleep 10; /home/pi/GitProjects/iAltar/config/asoundConfig.py -c /home/pi/GitProjects/iAltar/config/ProArts.json 2>&1 | logger -t iAltarWrap`
 
 * `@reboot sleep 20 ; /home/pi/GitProjects/iAltar/iAltar/iAltarWrap.sh -c /home/pi/GitProjects/iAltar/config/ProArts.json 2>&1 | logger -t iAltarWrap`
