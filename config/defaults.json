@@ -4,6 +4,7 @@
   "voiceMaxVol" : 1.0,
   "tmpdir" : "GitProjects/iAltar/tmp",
   "fontDir" : "GitProjects/iAltar/config",
+  "asoundDir" : "GitProjects/iAltar/config",
   "displayTimeRange" : [3,8],
   "defaultSearchType" : "Archive",
   "archiveDir" : "/media/pi/ARCHIVE/ArchiveImages/",
