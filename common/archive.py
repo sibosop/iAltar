@@ -30,8 +30,12 @@ def clearArchive():
     os.remove(f)
   return cdir
 
+randList = []
+randListIndex = 0
 def getArchive():
   global init
+  global randList
+  global randListIndex
   adir=config.specs["archiveDir"]
   cdir=clearArchive()
   if init == False:
@@ -41,9 +45,17 @@ def getArchive():
     for a in glob.glob(adir+"/*.tgz"):
       if False: print("a: %s"%a)
       archives.append(a)
-  n = random.randint(0,len(archives)-1)
-  if debug: print("n:"+str(n)+" archive:"+archives[n])
+      #n = random.randint(0,len(archives)-1)
+    randList = random.sample(range(len(archives)),len(archives))
+    randListIndex = 0
+      
   try:  
+    n = randList[randListIndex]
+    randListIndex += 1
+    if randListIndex == len(archives) :
+      randListIndex = 0
+      randList = random.sample(range(len(archives)),len(archives))
+    if debug: print("n:"+str(n)+" archive:"+archives[n])
     cmd=["tar","xzf",archives[n],"-C",cdir]
     if debug: print( "cmd: %s"%cmd)
     subprocess.check_output(cmd)
