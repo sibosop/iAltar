@@ -33,6 +33,7 @@ searchType=None
 def setSearchType(t):
   global searchType
   searchType = t[0]
+  archive.init = False;
   return host.jsonStatus("ok")
 
 def setImgData(fname):
