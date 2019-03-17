@@ -74,11 +74,12 @@ class serverThread(threading.Thread):
     host = subprocess.check_output(["hostname","-I"]).split();
     self.host = host[0]
     self.port = port
+    self.name = "serverThread"
     print("%s %s %d"%(self.name,self.host,self.port))
     self.server = ThreadedHTTPServer((self.host, self.port), MyHandler)
 
   def run(self):
-    print("starting server")
+    print "%s starting server"%(self.name)
     self.server.serve_forever()
     print("shouldn't get here");
 

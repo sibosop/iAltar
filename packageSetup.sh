@@ -1,5 +1,5 @@
 #!/bin/bash
-cd ~/GitProjects/netGarden
+cd ~/GitProjects/iAltar
 ./fixSwap.sh
 sudo apt-get -y install python-pip
 sudo -H pip install --upgrade pip

@@ -49,6 +49,7 @@ class phraseThread(threading.Thread):
     self.hasVoice = host.getLocalAttr("hasVoice")
 
   def run(self):
+    print "%s starting"%self.name
     lastPhrase = []
     splash = "%s/%s"%(home,config.specs['splashImg'])
     if self.hasDisplay:

@@ -35,6 +35,7 @@ class ShutdownThread(threading.Thread):
     subprocess.check_output(["sudo","poweroff"])
 
   def run(self):
+    print "%s starting"%self.name
     while GPIO.input(16):
       time.sleep(1)
       continue

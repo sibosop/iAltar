@@ -24,7 +24,9 @@ def setHostList():
   if config.specs == None:
     config.load()
   if len(hosts) == 0:
+    if debug: print "loading hosts"
     for a in config.specs['hosts']:
+      if debug: print "%s"%a
       hosts.append(a)
       if 'name' in a:
         names.append(a['name'])
@@ -127,8 +129,11 @@ def isLocalHost(ip):
   return False
 
 def getLocalHost():
+  if debug: print "get Local host"
   subnet = config.specs['subnet']
+  if debug: print subnet
   ipList = subprocess.check_output(["hostname","-I"]).split()
+  if debug: print ipList
   for ip in ipList:
     if subnet in ip:
       if debug: print("local host:"+ip)
@@ -150,7 +155,7 @@ def getAttr(ip,a):
   
 def getLocalAttr(a):
   rval = getHost(getLocalHost())[a]
-  if debug: print("Get Local Attr "+a+":"+str(rval))
+  if debug: print "Get Local Attr %s %s"%(a,rval)
   return rval
 
 def internetOn():
