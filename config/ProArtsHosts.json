@@ -36,8 +36,8 @@
       "hasDisplay": true,
       "displayType" : "Phrase",
       "wantsPhrase" : true,
-      "hasVoice" : true,
-      "hasMusic" : true,
+      "hasVoice" : false,
+      "hasMusic" : false,
       "hasPowerCheck" : false
     },
     {
