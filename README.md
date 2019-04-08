@@ -53,7 +53,7 @@ Once you have the card numbers you edit this file:
 Change the `pcm: hw:<cardno>,1` to have the proper numbers for the mic and speaker.
 
 Linux uses ALSA for its audio:
-* speaker-test 
+* speaker-test *
   * `speaker-test -c2`
 * arecord
   * `arecord --format=S16_LE --duration=5 --rate=16k --file-type=raw out.raw`
@@ -62,3 +62,14 @@ Linux uses ALSA for its audio:
 * alsamixer (gui) or amixer (command line)
   * amixer -c 2 cset numid=3,name='PCM Playback Volume' 100
 * aplay --format=S16_LE --rate=44100  audio3.raw
+
+
+### dataplicity setup
+Assumes you have eth0 (wired) hooked to router with no ethernet connection of it's own
+in the crontab:
+* `@reboot sleep 10; /opt/dataplicity/agent/dataplicity --server-url https://api.dataplicity.com/ run 2>&1 | logger -t dataplicity`
+### remove gateway for eth0 dhcp connection so it doesn't try to route that way
+* `sudo vi /etc/dhcpcd.conf`
+* add the lines
+  * `interface eth0`
+  * `     nogateway`
