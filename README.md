@@ -66,8 +66,13 @@ Linux uses ALSA for its audio:
 
 ### dataplicity setup
 Assumes you have eth0 (wired) hooked to router with no ethernet connection of it's own
-in the crontab:
-* `@reboot sleep 10; /opt/dataplicity/agent/dataplicity --server-url https://api.dataplicity.com/ run 2>&1 | logger -t dataplicity`
+* change the supervisor config file to log to /var/log
+* `sudo vi /etc/supervisor/supervisord.conf`
+* change lines to this
+ * `;logfile=/var/log/supervisor/supervisord.log ; (main log file;default $CWD/supervisord.log)`
+ * `logfile=/var/log/supervisord.log ; (main log file;default $CWD/supervisord.log)`
+ * `;childlogdir=/var/log/supervisor            ; ('AUTO' child log dir, default $TEMP)`
+ * `childlogdir=/var/log/   ; ('AUTO' child log dir, default $TEMP)`
 ### remove gateway for eth0 dhcp connection so it doesn't try to route that way
 * `sudo vi /etc/dhcpcd.conf`
 * add the lines
