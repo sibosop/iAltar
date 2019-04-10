@@ -32,7 +32,7 @@
       "name": "pi102",
       "ip": "192.168.50.102",
       "isRaspberry" : true,
-      "fontSize" : 90,
+      "fontSize" : 200,
       "hasDisplay": true,
       "displayType" : "Phrase",
       "wantsPhrase" : true,
