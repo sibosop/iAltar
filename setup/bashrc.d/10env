@@ -16,3 +16,4 @@ export serverdir=$ialtar/iAltar
 export clidir=$ialtar/cli
 export configDir=$ialtar/config
 export commondir=$ialtar/common
+export mondir=$ialtar/monitor

@@ -93,6 +93,30 @@ def sendToHost(ip,cmd):
     rval = False
   return rval
 
+'''
+Dup here to get actual response from host 
+duh
+'''
+def hostReq(ip,cmd):
+  rval =None
+  try:
+    if debug: print "send to host:",ip,cmd
+    url = "http://%s:%d"%(ip,port)
+    if debug: print("url:"+url)
+    if debug: print("cmd json:"+json.dumps(cmd))
+    req = urllib2.Request(url
+                ,json.dumps(cmd),{'Content-Type': 'application/json'})
+    f = urllib2.urlopen(req,None,timeout)
+    rval = f.read()
+    if debug: print("got response:"+rval)
+  except Exception as e:
+    error = "host [%s] send error:%s"%(ip,str(e))
+    print(error)
+    if debug: print error
+    rval = None
+  return rval
+
+
 def sendWithSubnet(ip,cmd):
   for i in ip:
     h = config.specs['subnet']+"."+i
