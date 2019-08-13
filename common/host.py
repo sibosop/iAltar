@@ -44,6 +44,7 @@ def getHosts():
   return hosts
   
 def getHostIps():
+  hosts = getHosts()
   rval = []
   for h in hosts:
     rval.append(h['ip'])
@@ -152,24 +153,28 @@ def isLocalHost(ip):
   if debug: print("isLocalHost is False:"+ip)
   return False
 
+def common_member(a,b):
+ s = frozenset(a)
+ s1 = frozenset(b)
+ i = s.intersection(s1)
+ if debug: print("s %s s1 %s i %s"%(s,s1,i))
+ return list(i)[0] 
+
 def getLocalHost():
   if debug: print "get Local host"
-  subnet = config.specs['subnet']
-  if debug: print subnet
   ipList = subprocess.check_output(["hostname","-I"]).split()
-  if debug: print ipList
-  for ip in ipList:
-    if subnet in ip:
-      if debug: print("local host:"+ip)
-      return ip
-  return None
+  hips = getHostIps()
+  if debug: print ("ipList %s hips %s"%(ipList,hips))
+  ip = common_member(ipList,getHostIps())
+  if debug: print("local host %s"%ip)
+  return ip
   
 def getHost(ip):
     getHosts()
     for h in hosts:
       if h['ip'] == ip:
         return h
-    print("Can't find ip"+ip)
+    print("Can't find %s"%ip)
     return None
     
 def getAttr(ip,a):

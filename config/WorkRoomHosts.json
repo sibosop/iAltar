@@ -36,8 +36,8 @@
       "hasDisplay": true,
       "displayType" : "Phrase",
       "wantsPhrase" : true,
-      "hasVoice" : false,
-      "hasMusic" : false,
+      "hasVoice" : true,
+      "hasMusic" : true,
       "hasPowerCheck" : false
     },
     {
@@ -55,15 +55,15 @@
     },
     {
       "isMaster": true,
-      "name": "pi105",
-      "ip": "192.168.20.105",
+      "name": "pi129",
+      "ip": "192.168.20.129",
       "isRaspberry" : true,
       "fontSize" : 90,
       "hasDisplay": false,
       "displayType" : "Image",
       "wantsPhrase" : false,
-      "hasVoice" : true,
-      "hasMusic" : true,
+      "hasVoice" : false,
+      "hasMusic" : false,
       "hasPowerCheck" : true
     }
   ]
