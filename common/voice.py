@@ -29,14 +29,18 @@ voiceSound = None
 voiceChanged=False
 voiceMinVol=.7
 
-def sendPhrase(p):
+def sendPhrase(args):
   global voiceSound
   global voiceChanged
+  p = args['phrase']
   speakText = p[0]+" "+p[1]
   file=None
-  while file is None:
-    lang = random.choice(config.specs['langList'])
-    file=textSpeaker.makeSpeakFile(speakText,lang)
+  if 'phraseFile' in args:
+    print("decoding voice file data from args")
+  else:
+    while file is None:
+      lang = random.choice(config.specs['langList'])
+      file=textSpeaker.makeSpeakFile(speakText,lang)
   print "voice sound set to: %s"%file
   voiceMutex.acquire()
   voiceSound = pygame.mixer.Sound(file)

@@ -17,12 +17,12 @@ import textSpeaker
 import voice
 
 phraseMutex = threading.Lock()
-phrase = []
+phrase = {}
 
 name = "Phrase Handler"
 def setPhrase(args):
   global phrase
-  p = args['phrase']
+  p = args
   print("%s setting phrase to %s"%(name,p))
   phraseMutex.acquire()
   phrase=p
@@ -50,7 +50,7 @@ class phraseThread(threading.Thread):
 
   def run(self):
     print "%s starting"%self.name
-    lastPhrase = []
+    lastPhrase = {}
     splash = "%s/%s"%(home,config.specs['splashImg'])
     if self.hasDisplay:
       print("%s displaying f:%s"%(name,splash))
@@ -61,7 +61,7 @@ class phraseThread(threading.Thread):
       if p != lastPhrase:
         print("%s Displaying Phrase %s"%(self.name,p))
         if self.hasDisplay and self.displayType == "Phrase":
-            displayImage.printText(p)
+            displayImage.printText(p['phrase'])
         if self.hasVoice:
           voice.sendPhrase(p)
         lastPhrase = p
