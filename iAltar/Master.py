@@ -26,6 +26,8 @@ import datetime
 import traceback
 import ssl
 import watchdog
+import base64
+import textSpeaker
 
 
 searchType=None
@@ -186,10 +188,16 @@ class masterThread(threading.Thread):
         lastCacheId = cacheId
 
       if len(phraseHosts) != 0:
+        args = {}
+        args['phrase'] = choices
+        print("%s sending %s to %s"%(self.name,choices,ip))
+        lang = random.choice(config.specs['langList'])
+        file=textSpeaker.makeSpeakFile("%s %s"%(choices[0],choices[1]),lang)
+        with open(file,"rb") as sf:
+          args['phraseData'] = base64.b64encode(sf.read())
+        os.unlink(file)
+        #os.unlink(file.replace("mp3","wav"));
         for ip in phraseHosts:
-          args = {}
-          args['phrase'] = choices
-          print("%s sending %s to %s"%(self.name,choices,ip))
           if host.isLocalHost(ip):
             PhraseHandler.setPhrase(args)
           else:
