@@ -15,6 +15,7 @@ import textSpeaker
 import time
 import config
 import pygame
+import base64
 
 debug = True
 debugFound = True
@@ -35,8 +36,12 @@ def sendPhrase(args):
   p = args['phrase']
   speakText = p[0]+" "+p[1]
   file=None
-  if 'phraseFile' in args:
+  if 'phraseData' in args:
     print("decoding voice file data from args")
+    file = "%s/%s/%s_%s.mp3"%(home,config.specs['tmpdir'],p[0],p[1])
+    print("decoding to file %s"%file)
+    with open(file, 'wb') as f:
+      f.write(base64.b64decode(args['phraseData']))
   else:
     while file is None:
       lang = random.choice(config.specs['langList'])
@@ -48,7 +53,7 @@ def sendPhrase(args):
   if st.backgroundCount != 0:
     st.backgroundCount -= 1
   voiceMutex.release()
-  print("checkText unlinking"+file+" voiceSound:"+str(voiceSound))
+  print("checkText unlinking:"+file+" voiceSound:"+str(voiceSound))
   os.unlink(file)
 
 class VoiceThread(threading.Thread):

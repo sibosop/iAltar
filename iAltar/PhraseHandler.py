@@ -23,7 +23,7 @@ name = "Phrase Handler"
 def setPhrase(args):
   global phrase
   p = args
-  print("%s setting phrase to %s"%(name,p))
+  print("%s setting phrase to %s"%(name,p['phrase']))
   phraseMutex.acquire()
   phrase=p
   phraseMutex.release()
@@ -59,7 +59,7 @@ class phraseThread(threading.Thread):
       self.watchdog.feed(self)
       p = getPhrase()
       if p != lastPhrase:
-        print("%s Displaying Phrase %s"%(self.name,p))
+        print("%s Displaying Phrase %s"%(self.name,p['phrase']))
         if self.hasDisplay and self.displayType == "Phrase":
             displayImage.printText(p['phrase'])
         if self.hasVoice:
