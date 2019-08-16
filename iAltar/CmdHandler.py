@@ -26,6 +26,12 @@ def doProbe(args):
   if host.getLocalAttr('isMaster'):
     state['isMaster'] = True
     state['searchType'] = Master.searchType
+  state['isRaspberry'] = host.getLocalAttr('isRaspberry')
+  state['hasDisplay'] = host.getLocalAttr('hasDisplay')
+  state['wantsPhrase'] = host.getLocalAttr('wantsPhrase')
+  state['hasVoice'] = host.getLocalAttr('hasVoice')
+  state['hasMusic'] = host.getLocalAttr('hasMusic')
+  state['hasPowerCheck'] = host.getLocalAttr('hasPowerCheck')
   return json.dumps(state)
 
 

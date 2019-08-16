@@ -16,7 +16,7 @@ import config
 import host
 import base64
 import PhraseHandler
-import google
+import googleSearch
 import words
 import json
 import requests
@@ -106,7 +106,7 @@ class masterThread(threading.Thread):
       else:
         host.sendToHost(ip,{'cmd' : 'ClearCache' , 'args' : None});
 
-      if host.getAttr(ip,'displayType') == 'Image':
+      if host.getAttr(ip,'hasDisplay') and host.getAttr(ip,'displayType') == 'Image':
         print("%s: display type for %s: image"%(self.name,ip))
         imageHosts.append(ip)
 
@@ -129,7 +129,7 @@ class masterThread(threading.Thread):
             print("%s: choice %s"%(self.name,c))
       elif searchType == 'Google':
         choices = words.getWords()
-        urls = google.getUrls(choices);
+        urls = googleSearch.getUrls(choices)
         if urls == None:
           print("%s Google Error switching to Archive"%self.name)
           searchType = "Archive"
@@ -137,12 +137,25 @@ class masterThread(threading.Thread):
         if len(urls) == 0:
           print("%s Nothing found try again"%self.name)
           continue
-        images = urlsToImages(google.getUrls(choices));
+        images = urlsToImages(googleSearch.getUrls(choices));
       else:
         print("%s unimplemented type %s switching to archive"%(self.name,searchType))
         searchType = 'Archive'
       if searchType != 'Archive':
         archive.putArchive(choices)
+
+      phraseArgs = {}
+      if len(phraseHosts) != 0:
+        phraseArgs['phrase'] = choices
+        print("%s sending %s to %s"%(self.name,choices,ip))
+        lang = random.choice(config.specs['langList'])
+        file=textSpeaker.makeSpeakFile("%s %s"%(choices[0],choices[1]),lang)
+        with open(file,"rb") as sf:
+          phraseArgs['phraseData'] = base64.b64encode(sf.read())
+        os.unlink(file)
+        #os.unlink(file.replace("mp3","wav"));
+    
+
       if len(imageHosts) != 0:
         numImages = len(images)
         imagesPerHost = numImages/len(imageHosts)
@@ -188,20 +201,11 @@ class masterThread(threading.Thread):
         lastCacheId = cacheId
 
       if len(phraseHosts) != 0:
-        args = {}
-        args['phrase'] = choices
-        print("%s sending %s to %s"%(self.name,choices,ip))
-        lang = random.choice(config.specs['langList'])
-        file=textSpeaker.makeSpeakFile("%s %s"%(choices[0],choices[1]),lang)
-        with open(file,"rb") as sf:
-          args['phraseData'] = base64.b64encode(sf.read())
-        os.unlink(file)
-        #os.unlink(file.replace("mp3","wav"));
         for ip in phraseHosts:
           if host.isLocalHost(ip):
-            PhraseHandler.setPhrase(args)
+            PhraseHandler.setPhrase(phraseArgs)
           else:
-            host.sendToHost(ip,{'cmd' : 'Phrase' , 'args' : args});
+            host.sendToHost(ip,{'cmd' : 'Phrase' , 'args' : phraseArgs});
     
       sleepTime = config.specs['masterSleepInterval']  
       print("%s: sleeping %d"%(self.name,sleepTime))
